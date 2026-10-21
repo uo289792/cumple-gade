@@ -1,0 +1,268 @@
+.game {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: start;
+  gap: 45px;
+  margin: 65px auto 0;
+  max-width: 1060px;
+}
+.introduction {
+  padding-top: 25px;
+  min-width: 0;
+}
+.introduction > p:first-child {
+  font-size: 8px;
+  color: #9b713e;
+}
+.introduction h3 {
+  font-size: 43px;
+  margin-bottom: 18px;
+}
+.introduction > p:not(:first-child) {
+  font-size: 13px;
+  color: #7f7055;
+  line-height: 1.85;
+}
+.dragon {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 18px 0;
+}
+.dragon > svg {
+  width: 110px;
+}
+.dragon > span {
+  font-size: 23px;
+  line-height: 1.2;
+  color: #98764c;
+}
+.introduction .instructions {
+  font-size: 10px;
+  margin: 0 0 21px;
+}
+.skip {
+  display: block;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: #8a7658;
+  font-size: 10px;
+  min-height: 44px;
+  padding: 12px 0;
+  text-align: left;
+}
+.playArea {
+  min-width: 0;
+  padding: 27px;
+  scroll-margin-top: 100px;
+}
+.ready {
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #9b7d4c;
+  gap: 22px;
+}
+.ready > p {
+  font-size: 29px;
+  line-height: 1.3;
+  margin: 0;
+}
+.ready > span {
+  font-size: 11px;
+  line-height: 1.8;
+  max-width: 240px;
+}
+.score {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  color: #8c704a;
+}
+.progress {
+  height: 3px;
+  background: #b9a06a33;
+  margin: 15px 0 22px;
+}
+.progress > i {
+  display: block;
+  height: 100%;
+  background: #6b7e55;
+  transition: width 0.25s;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.card {
+  min-width: 0;
+  min-height: 95px;
+  border: 3px double #b6996355;
+  border-radius: 4px;
+  color: #cfb786;
+  background: #344c3c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 11px;
+  padding: 10px 5px;
+  box-shadow: 1px 3px 6px #4b382012;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.card:not(:disabled):hover {
+  transform: translateY(-3px);
+}
+.card:disabled {
+  opacity: 1;
+}
+.card > small {
+  font:
+    italic 10px Georgia,
+    serif;
+}
+.card > span {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+.revealed {
+  background: #fff8e5;
+  color: #765438;
+  border-color: #b29056;
+}
+.paired {
+  background: #d6ddc3;
+  color: #3b5a40;
+  border-color: #8d9e74;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin-top: 15px;
+}
+.controls > button {
+  min-height: 44px;
+  font-size: 10px;
+}
+.feedback {
+  font-size: 11px;
+  line-height: 1.7;
+  min-height: 38px;
+  margin: 13px 0 0;
+  color: #8b7250;
+}
+.reward {
+  scroll-margin-top: 100px;
+  margin-top: 20px;
+  border-top: 1px dashed #b69b6b88;
+  padding-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #876c3a;
+  gap: 8px;
+}
+.reward > h4 {
+  font:
+    30px "Cormorant Garamond",
+    Georgia,
+    serif;
+  margin: 3px 0;
+}
+.reward > p {
+  font-size: 11px;
+  margin: 0;
+}
+.reward > button {
+  min-height: 44px;
+}
+@media (max-width: 1050px) {
+  .game {
+    gap: 25px;
+    grid-template-columns: 0.75fr 1.25fr;
+  }
+  .playArea {
+    padding: 22px;
+  }
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .game {
+    grid-template-columns: 1fr;
+    margin-top: 42px;
+    gap: 20px;
+  }
+  .introduction {
+    padding: 0 5px;
+  }
+  .introduction > h3 {
+    font-size: 38px;
+  }
+  .dragon {
+    margin: 14px 0;
+  }
+  .dragon > svg {
+    width: 90px;
+  }
+  .introduction .instructions {
+    font-size: 11px;
+  }
+  .playArea {
+    padding: 22px;
+  }
+  .card {
+    min-height: 105px;
+  }
+  .card > span {
+    font-size: 21px;
+  }
+  .controls > button {
+    font-size: 11px;
+  }
+  .feedback {
+    font-size: 12px;
+  }
+}
+@media (max-width: 360px) {
+  .playArea {
+    padding: 17px;
+  }
+  .cards {
+    gap: 8px;
+  }
+  .card {
+    min-height: 95px;
+  }
+  .card > span {
+    font-size: 18px;
+  }
+  .controls {
+    gap: 4px 8px;
+  }
+  .controls > button {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .progress > i {
+    transition: none;
+  }
+}
