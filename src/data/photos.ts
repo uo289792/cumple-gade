@@ -5,7 +5,6 @@ export type Photo = {
   src: string;
   alt: string;
   caption: string;
-  secret?: string;
 };
 import gallery from "./gallery.json";
 export const photos: Photo[] = [
@@ -17,24 +16,27 @@ export const photos: Photo[] = [
   },
   {
     id: "encuentro",
-    src: "",
+    src: "images/couple/hito-encuentro.webp",
     alt: "El primer encuentro",
     caption: "El comienzo de todo",
-    secret: "[Añade un mensaje secreto.]",
   },
-  { id: "beso", src: "", alt: "El primer beso", caption: "1 de octubre" },
+  {
+    id: "beso",
+    src: "images/couple/hito-beso.webp",
+    alt: "El primer beso",
+    caption: "1 de octubre",
+  },
   {
     id: "aniversario",
-    src: "",
-    alt: "Un recuerdo de la pareja",
+    src: "images/couple/hito-aniversario.webp",
+    alt: "El lugar donde le pediste salir",
     caption: "16 de diciembre",
   },
   {
     id: "poznan",
-    src: "",
+    src: "images/couple/hito-poznan.webp",
     alt: "El primer viaje juntos a Poznań",
     caption: "Nuestra primera aventura",
-    secret: "[Añade vuestro recuerdo del viaje.]",
   },
   ...gallery,
   {
@@ -46,3 +48,6 @@ export const photos: Photo[] = [
 ];
 export const asset = (path: string) =>
   `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+
+// Una sola fotografía del álbum contiene el cuarto símbolo, siempre en el mismo lugar.
+export const albumSecretPhotoId = "galeria-11";

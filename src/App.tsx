@@ -5,6 +5,7 @@ import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
+  Heart,
   Leaf,
   Menu,
   Moon,
@@ -55,7 +56,8 @@ export default function App() {
   const [scroll, setScroll] = useState(0);
   const gallery = photos.filter((p) => p.id.startsWith("galeria"));
   const current = memories[memory];
-  const unlocked = found.length === 3 || skipped;
+  const foundCount = mystery.filter((m) => found.includes(m.id)).length;
+  const unlocked = mystery.every((m) => found.includes(m.id)) || skipped;
   useEffect(() => {
     const onScroll = () =>
       setScroll(
@@ -111,7 +113,7 @@ export default function App() {
   };
   const symbol = (id: string) => {
     const index = mystery.findIndex((m) => m.id === id);
-    const Icon = [Leaf, Star, Moon][index];
+    const Icon = [Leaf, Star, Moon, Heart][index];
     return (
       <button
         className={`hidden-symbol ${found.includes(id) ? "collected" : ""}`}
@@ -174,7 +176,9 @@ export default function App() {
             }}
           >
             <Sparkles size={14} />
-            <span>{found.length}/3 secretos</span>
+            <span>
+              {foundCount}/{mystery.length} secretos
+            </span>
           </button>
           <button
             className="icon-button mobile-menu"
@@ -287,6 +291,7 @@ export default function App() {
           symbol={symbol}
         />
         <AlbumSection
+          symbol={symbol}
           gallery={gallery}
           flipped={flipped}
           setFlipped={setFlipped}

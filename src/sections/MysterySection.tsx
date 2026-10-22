@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   BookOpen,
+  Heart,
   Leaf,
   LockKeyhole,
   Moon,
@@ -34,12 +35,12 @@ export default function MysterySection({
           algo para ti.
         </h2>
         <p>
-          Tres símbolos se han escapado por este universo. Encuéntralos para
+          Cuatro símbolos se han escapado por este universo. Encuéntralos para
           abrir la última carta. Mira con calma: ninguno está demasiado lejos.
         </p>
         <div className="symbol-slots">
           {mystery.map((m, i) => {
-            const Icon = [Leaf, Star, Moon][i];
+            const Icon = [Leaf, Star, Moon, Heart][i];
             return (
               <div key={m.id} className={found.includes(m.id) ? "found" : ""}>
                 <Icon />
@@ -49,7 +50,8 @@ export default function MysterySection({
           })}
         </div>
         <p role="status" className="mystery-status">
-          {found.length} de 3 símbolos encontrados
+          {mystery.filter((m) => found.includes(m.id)).length} de{" "}
+          {mystery.length} símbolos encontrados
           {unlocked ? " · La carta está abierta." : ""}
         </p>
         <div className="mystery-actions">

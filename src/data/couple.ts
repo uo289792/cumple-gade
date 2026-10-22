@@ -42,7 +42,6 @@ export const memories = [
     title: "El primer encuentro",
     caption: "Donde empieza el mapa.",
     text: "La primera vez que os visteis. El punto de partida de esta historia.",
-    note: "[Javi: añade aquí lo que recuerdas de ese día.]",
   },
   {
     id: "beso",
@@ -50,7 +49,6 @@ export const memories = [
     title: "El primer beso",
     caption: "Una fecha para guardar.",
     text: "El primer beso tiene su propia página en este diario.",
-    note: "[Javi: añade vuestro recuerdo de este momento.]",
   },
   {
     id: "aniversario",
@@ -58,7 +56,6 @@ export const memories = [
     title: "El comienzo oficial",
     caption: "El siguiente capítulo.",
     text: "El día que decidisteis empezar oficialmente vuestra relación.",
-    note: "[Javi: escribe un mensaje personal para esta página.]",
   },
   {
     id: "poznan",
@@ -66,7 +63,6 @@ export const memories = [
     title: "La primera aventura",
     caption: "El primer destino juntos.",
     text: "Vuestro primer viaje juntos: Poznań. La primera parada de muchas aventuras compartidas.",
-    note: "[Javi: añade vuestra anécdota favorita del viaje.]",
   },
 ];
 export const mystery = [
@@ -87,5 +83,11 @@ export const mystery = [
     name: "Luna",
     hint: "La imaginación guarda una luna al final del atlas de la artista.",
     target: "artista",
+  },
+  {
+    id: "heart",
+    name: "Corazón",
+    hint: "Una de las quince fotos del álbum esconde un corazón al dorso. Gíralas para encontrarlo entre los globos.",
+    target: "album",
   },
 ];

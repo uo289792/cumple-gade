@@ -1,6 +1,6 @@
 # El misterio de nuestro universo
 
-Una aventura de cumpleaños en React + TypeScript + Vite, con ilustración original de bosque, diario interactivo, álbum con las 15 fotografías encontradas en `Fotos/`, Pajaporte con 14 países, recuerdo del primer viaje a Poznań, quiz, búsqueda de símbolos, dragón original y atlas visual de animación con favoritos.
+Una aventura de cumpleaños en React + TypeScript + Vite, con ilustración original de bosque, diario interactivo, álbum con las 15 fotografías encontradas en `Fotos/`, Pajaporte con 14 países, recuerdo del primer viaje a Poznań, quiz, búsqueda de símbolos, dragón original y atlas visual de animación con lupa y reto de mirada.
 
 ## Ejecutar
 
@@ -33,8 +33,8 @@ npm run preview
 | `src/styles/global.css`     | Estética, animaciones y adaptación móvil                                          |
 
 1. La carta ya contiene el mensaje de Javi para Gade y está marcada como personalizada. Puedes editarla en `couple.letter`; se han respetado sus palabras, añadiendo puntuación y separándolas en párrafos.
-2. Sustituye las notas entre corchetes de cada recuerdo y los mensajes del reverso del álbum.
-3. Identifica qué fotos corresponden a encuentro, beso, aniversario y Poznań. Asigna sus rutas `images/couple/recuerdo-XX.jpeg` en `photos.ts`. No se han atribuido fotos a fechas sin evidencia. La última foto del álbum se usa en la carta; puedes cambiarla.
+2. La línea temporal muestra solo los hechos confirmados y las fotos asignadas. Se han eliminado las notas de anécdotas pendientes. El álbum ya no muestra mensajes al dorso: catorce fotos tienen globos y una contiene el cuarto secreto.
+3. Las cuatro fotos adjuntas están asignadas en el orden indicado por Javi: encuentro, beso, lugar donde le pidió salir y Poznań. Se conservan completas en `public/images/couple/hito-*.webp`, sin recortar rostros. Las rutas están en `src/data/photos.ts`.
 4. El Pajaporte ya incluye los 14 países únicos proporcionados: Polonia, Italia, Hungría, Noruega, Alemania, Albania, Montenegro, Islandia, Malta, República Checa, Grecia, Reino Unido, España y Nepal. La lista está en `countryNames`, sin duplicados; los contadores y la respuesta del quiz se calculan a partir de ella. Los países aparecen juntos en una página legible del diario, sin diálogos repetidos. Poznań se destaca en un billete decorativo como primer viaje.
 5. La sección de la artista es un atlas de doce imágenes de animación. La selección, los créditos y las notas se editan en `src/data/artAtlas.ts`; los archivos optimizados están en `public/images/art-atlas/`. El antiguo lienzo se ha retirado.
 6. Para ocultar el contenido íntimo, usa `showPrivateJoke: false` en `couple.ts`: el Pajaporte se presenta como un diario de viajes y la pregunta del quiz vuelve a hablar de países compartidos. Puedes cambiar el nombre en `travelTitle`. La configuración es de código, no un panel público. El contenido de una web estática no puede proteger secretos: elimina también el texto privado antes de una publicación si no debe descargarse.
@@ -49,7 +49,7 @@ Para añadir recuerdos, amplía `memories` sin modificar componentes. Para añad
 - «La maleta del dragón»: juego de memoria con seis parejas elegidas entre vuestros países. Cuenta intentos y pistas, permite volver a barajar y entrega la estrella al completarlo. Puede saltarse sin bloquear la carta.
 - Símbolos Hoja, Estrella y Luna en historia, Pajaporte y artista. Pistas opcionales, acompañante y alternativa para saltar el acertijo. Las dos vías abren la carta.
 - Álbum: ampliar, navegar con botones, deslizar con el dedo y girar las fotos con mensaje. Los diálogos cierran con Escape y mantienen el foco dentro mediante `<dialog>`.
-- Atlas de arte con filtros por mundo, ampliación completa, navegación con flechas o deslizamiento, notas de observación y colección de favoritos guardada en este navegador.
+- Atlas de arte con filtros, lupa del 100 al 300 %, navegación de láminas y reto de mirada con blanco y negro y pistas. Se ha eliminado la colección de favoritos.
 - Aviso de felicitación sintetizado de unos 0,19 s al pulsar el contador de secretos o recoger sus símbolos. Sin música ni control de volumen; no suena al navegar por recuerdos ni al abrir el diario.
 - Los símbolos y recuerdos se guardan en localStorage. Para reiniciar la experiencia, borra los datos del sitio del navegador (claves `universo-symbols`, `universo-memories`, `universo-skipped`). No se envían datos a un backend.
 - Soporte de movimiento reducido, botones con etiquetas, navegación por teclado y diseño móvil. Las fuentes de Google son el único recurso visual externo; si no cargan se usan fuentes alternativas locales.
@@ -112,22 +112,31 @@ Verificado: partida completa 6/6, pista temporal, fallo y ocultación, repetici�
 
 ## Atlas de la imaginación
 
-El capítulo «Los mundos que llevas dentro» sustituye al lienzo. Contiene doce láminas: tres estudios de color de Woonyoung Jung para _Cómo entrenar a tu dragón 3_, dos fondos conceptuales de Nick Cross para _Over the Garden Wall_, dos láminas de personajes del piloto de Mikkel Sommer, un retrato frontal de Hipo del portafolio de Megan Walker y cuatro fotogramas oficiales de Studio Ghibli (_El castillo ambulante_ y _El viaje de Chihiro_). Cada pieza identifica su tipo: los fotogramas no se presentan como concept art. Los títulos españoles de las láminas y las notas de observación son editoriales. Las paletas son orientativas.
+Doce láminas: tres estudios de color de Woonyoung Jung para _Cómo entrenar a tu dragón 3_, dos fondos conceptuales de Nick Cross para _Over the Garden Wall_, dos diseños de personajes de su piloto de Mikkel Sommer, un retrato de Desdentao realizado con lápices de colores por Manuel Reartes y cuatro fotogramas oficiales de Ghibli. Cada ficha identifica el tipo de imagen y acredita su procedencia. El dibujo de Desdentao es fan art, no concept art oficial. [Fuente del retrato a lápices](https://www.saatchiart.com/en-gt/art/Drawing-Toothless-in-Colored-Pencil/2959419/13687177/view).
 
-Los filtros permiten explorar dragones, bosque y anime. Cada imagen se abre completa, con navegación circular mediante botones, flechas de teclado o deslizamiento horizontal. Se puede guardar y quitar favoritos con el marcapáginas; «Mi colección» filtra por favoritos. La clave local `universo-art-favorites` mantiene la selección en el mismo navegador, sin backend. La luna del misterio sigue disponible al final de la sección.
+«Todos los mundos» usa columnas independientes, con separación de 32 px entre tarjetas y proporciones naturales. En móvil se presenta una sola columna. No se recortan las imágenes para igualar las alturas ni se añaden marcos verdes. La ficha se abre desde «Explorar lámina» y, al tocar su imagen, la lupa pasa al 200 %. Permite ajustar al 100 %, aumentar hasta el 300 %, desplazarse por los detalles y volver a la ficha.
 
-Código y contenido: `src/sections/ArtAtlas.tsx`, `ArtAtlas.module.css`, `src/data/artAtlas.ts`. Imágenes WebP locales en `public/images/art-atlas/`, cargadas de forma diferida. El código del antiguo lienzo y la generación de postales se ha eliminado; los PDF/QR y ejemplos exportados anteriormente no se modifican.
+Los favoritos se han eliminado. «Reto de mirada» elige una lámina del filtro actual, la muestra en blanco y negro y propone observar su luz, silueta y contraste. Se puede descubrir una pista, volver al color o pedir otro reto. «Vol. 01» se mantiene por petición de Javi como detalle editorial sin función interactiva.
 
-Fuentes:
+Contenido y créditos: `src/data/artAtlas.ts`. Componente y estilos: `src/sections/ArtAtlas.*`. Imágenes locales: `public/images/art-atlas/`.
 
-- [Entrevista de AWN al diseñador de producción de The Hidden World](https://www.awn.com/animationworld/designing-spectacular-realm-dragons-dreamworks-animations-hidden-world), con estudios de color acreditados a Woonyoung Jung. © 2019 DreamWorks Animation LLC.
-- [Portafolio de Nick Cross: fondos conceptuales](https://ncrossanimation.tumblr.com/post/101848993177/heres-another-couple-of-concept-backgrounds-done). Over the Garden Wall © Cartoon Network.
-- [Galería oficial de El castillo ambulante](https://www.ghibli.jp/works/howl/) y [El viaje de Chihiro](https://www.ghibli.jp/works/chihiro/). Copyright completo en cada ficha.
+## Cuatro secretos y álbum de globos
 
-Verificación del atlas: filtros 12/4/4/4 láminas, alta y baja de favoritos, persistencia tras recarga, estado de colección vacía, navegación circular, flechas de teclado, Escape y restauración del foco. Doce imágenes disponibles localmente. Página sin desbordamiento a 320, 390, 768, 844 y 1280 px; ventana ampliada sin desbordamiento a 320 y 390 px y en horizontal 844 × 390. Consola sin errores y compilación de producción correcta. Pruebas en navegador con tamaños emulados; no se han probado dispositivos físicos. Capturas: `atlas-arte-detalle.jpg` y `atlas-arte-galeria.jpg`.
+El acertijo exige hoja, estrella, luna y corazón. Los contadores se calculan a partir de `mystery` y la carta se desbloquea al encontrar todos, o con la alternativa explícita de saltar el acertijo. Los tres símbolos de una visita anterior se conservan; faltará recoger el corazón.
 
-Ajuste de ritmo y sobre: apertura del diario de 6,5 s (cubierta con 1,2 s de pausa inicial y giro de 1,6 s); parejas fallidas visibles 1,8 s y pistas 2,6 s. El sobre separa el sello de la dedicatoria sin márgenes heredados. Revisado a 320, 390, 430 y 1280 px sin desbordamiento, con cartas visibles tras 1 s y ocultación posterior correcta. Captura: sobre-movil-corregido.jpg.
+Las quince fotografías se pueden girar. Una sola, definida por `albumSecretPhotoId` en `src/data/photos.ts`, contiene un corazón que se pulsa para recogerlo. Las otras catorce muestran globos de cumpleaños y no muestran texto al dorso. El corazón no está en el DOM mientras la foto permanece de frente. La foto vuelve a girarse con el mismo control; la ampliación de la fotografía se mantiene en su anverso.
 
-Actualización del atlas: doce láminas, cuatro de dragones, cuatro del mundo de Over the Garden Wall y cuatro de Ghibli. Los diseños de Mikkel Sommer proceden de su blog; el retrato de Hipo procede de [Megan Walker](https://www.artstation.com/artwork/klqz5l), responsable de grooming y look development del cabello. Las imágenes de la galería conservan su altura natural; se han eliminado los fondos y marcos verdes, también en la ampliación.
+Los símbolos y recuerdos se conservan localmente. Los reversos girados se reinician al recargar. El botón de reiniciar descubrimientos permite volver a comenzar; no altera fotos ni contenido.
 
-Verificado en esta edición: filtros de cuatro láminas para dragones y bosque, retrato de Hipo y personajes cargados, proporciones naturales sin fondo verde y sin desbordamiento a 320, 390, 768 y 1280 px. Pulsación del contador de secretos con aviso de audio sin errores en consola. Captura móvil: `atlas-hipo-movil.jpg`.
+## Ritmo y sonido
+
+Apertura del diario: 6,5 s, con 1,2 s antes del giro de 1,6 s. Cartas fallidas: 1,8 s visibles; pistas: 2,6 s. Al pulsar el contador o recoger un secreto suena una felicitación sintetizada de unos 0,19 s. Sin música ni botón de volumen. El sobre mantiene separados sello y dedicatoria.
+
+## Verificación de esta edición
+
+- Quince reversos: catorce grupos de globos y un único corazón, sin mensajes ni botones anidados.
+- Carta bloqueada con 3/4 y disponible con 4/4; persistencia después de recargar y corazón oculto hasta girar su fotografía.
+- Cuatro imágenes de la historia cargadas, sin notas pendientes de anécdotas.
+- Doce láminas y separación uniforme de 32 px entre tarjetas de cada columna en escritorio.
+- Sin desbordamiento de página ni de los cuatro símbolos a 320, 390, 768 y 1280 px.
+- Zoom, vista completa, vuelta a ficha, reto de mirada, revelado de pista y cambio entre color y blanco y negro comprobados en navegador.

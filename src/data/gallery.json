@@ -3,105 +3,90 @@
     "id": "galeria-1",
     "src": "images/couple/recuerdo-01.jpeg",
     "alt": "Fotografía compartida 1",
-    "caption": "Fragmento 01",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 01"
   },
   {
     "id": "galeria-2",
     "src": "images/couple/recuerdo-02.jpeg",
     "alt": "Fotografía compartida 2",
-    "caption": "Fragmento 02",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 02"
   },
   {
     "id": "galeria-3",
     "src": "images/couple/recuerdo-03.jpeg",
     "alt": "Fotografía compartida 3",
-    "caption": "Fragmento 03",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 03"
   },
   {
     "id": "galeria-4",
     "src": "images/couple/recuerdo-04.jpeg",
     "alt": "Fotografía compartida 4",
-    "caption": "Fragmento 04",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 04"
   },
   {
     "id": "galeria-5",
     "src": "images/couple/recuerdo-05.jpeg",
     "alt": "Fotografía compartida 5",
-    "caption": "Fragmento 05",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 05"
   },
   {
     "id": "galeria-6",
     "src": "images/couple/recuerdo-06.jpeg",
     "alt": "Fotografía compartida 6",
-    "caption": "Fragmento 06",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 06"
   },
   {
     "id": "galeria-7",
     "src": "images/couple/recuerdo-07.jpeg",
     "alt": "Fotografía compartida 7",
-    "caption": "Fragmento 07",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 07"
   },
   {
     "id": "galeria-8",
     "src": "images/couple/recuerdo-08.jpeg",
     "alt": "Fotografía compartida 8",
-    "caption": "Fragmento 08",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 08"
   },
   {
     "id": "galeria-9",
     "src": "images/couple/recuerdo-09.jpeg",
     "alt": "Fotografía compartida 9",
-    "caption": "Fragmento 09",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 09"
   },
   {
     "id": "galeria-10",
     "src": "images/couple/recuerdo-10.jpeg",
     "alt": "Fotografía compartida 10",
-    "caption": "Fragmento 10",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 10"
   },
   {
     "id": "galeria-11",
     "src": "images/couple/recuerdo-11.jpeg",
     "alt": "Fotografía compartida 11",
-    "caption": "Fragmento 11",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 11"
   },
   {
     "id": "galeria-12",
     "src": "images/couple/recuerdo-12.jpeg",
     "alt": "Fotografía compartida 12",
-    "caption": "Fragmento 12",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 12"
   },
   {
     "id": "galeria-13",
     "src": "images/couple/recuerdo-13.jpeg",
     "alt": "Fotografía compartida 13",
-    "caption": "Fragmento 13",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 13"
   },
   {
     "id": "galeria-14",
     "src": "images/couple/recuerdo-14.jpeg",
     "alt": "Fotografía compartida 14",
-    "caption": "Fragmento 14",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 14"
   },
   {
     "id": "galeria-15",
     "src": "images/couple/recuerdo-15.jpeg",
     "alt": "Fotografía compartida 15",
-    "caption": "Fragmento 15",
-    "secret": "[Javi: añade un recuerdo para esta fotografía.]"
+    "caption": "Fragmento 15"
   }
 ]

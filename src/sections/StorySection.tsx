@@ -88,7 +88,6 @@ export default function StorySection({
             </p>
             <h3>{current.title}</h3>
             <p>{current.text}</p>
-            <p className="editable-note">{current.note}</p>
             <div className="memory-footer">
               <span>
                 <Heart size={14} /> Un recuerdo para siempre
