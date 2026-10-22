@@ -90,4 +90,10 @@ export const mystery = [
     hint: "Una de las quince fotos del álbum esconde un corazón al dorso. Gíralas para encontrarlo entre los globos.",
     target: "album",
   },
+  {
+    id: "feather",
+    name: "Pluma",
+    hint: "Una pequeña pluma se ha quedado junto a la última obra de Nulliusterra. Busca entre sus trazos.",
+    target: "su-arte",
+  },
 ];

@@ -5,6 +5,7 @@ import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
+  Feather,
   Heart,
   Leaf,
   Menu,
@@ -45,6 +46,11 @@ export default function App() {
   const [opening, setOpening] = useState(false);
   const [menu, setMenu] = useState(false);
   const [memory, setMemory] = useState(0);
+  const [storyUnlocked, setStoryUnlocked] = useSaved(
+    "universo-story-unlocked",
+    false,
+  );
+  const [quizSession, setQuizSession] = useState(0);
   const [discovered, setDiscovered] = useSaved<string[]>(
     "universo-memories",
     [],
@@ -115,7 +121,7 @@ export default function App() {
   };
   const symbol = (id: string) => {
     const index = mystery.findIndex((m) => m.id === id);
-    const Icon = [Leaf, Star, Moon, Heart][index];
+    const Icon = [Leaf, Star, Moon, Heart, Feather][index];
     return (
       <button
         className={`hidden-symbol ${found.includes(id) ? "collected" : ""}`}
@@ -138,6 +144,14 @@ export default function App() {
     if (!discovered.includes(memories[i].id))
       setDiscovered([...discovered, memories[i].id]);
   };
+  const revealStory = () => {
+    setStoryUnlocked(true);
+    chooseMemory(0);
+    requestAnimationFrame(() => {
+      document.getElementById("historia")?.focus({ preventScroll: true });
+      go("historia");
+    });
+  };
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
     null,
   );
@@ -147,7 +161,7 @@ export default function App() {
         <BookOpening
           onComplete={() => {
             setOpening(false);
-            chooseMemory(0);
+            if (storyUnlocked) chooseMemory(0);
             go("historia");
           }}
         />
@@ -286,6 +300,8 @@ export default function App() {
           ))}
         </div>
         <StorySection
+          unlocked={storyUnlocked}
+          goToQuiz={() => go("quiz")}
           memory={memory}
           current={current}
           chooseMemory={chooseMemory}
@@ -304,7 +320,7 @@ export default function App() {
             <SectionTitle
               number="03"
               title="A ver esa memoria…"
-              text="Cinco preguntas. Un montón de recuerdos. Y un dragón que sospecha que lo sabes todo."
+              text="Cinco preguntas para abrir las páginas de nuestra historia. Complétalas y el diario te llevará hasta ellas."
             />
             <div className="quiz-dragon">
               <Dragon />
@@ -315,7 +331,7 @@ export default function App() {
               </span>
             </div>
           </div>
-          <Quiz />
+          <Quiz key={quizSession} onComplete={revealStory} />
         </section>
         <TravelSection symbol={symbol} />
         <MysterySection
@@ -340,7 +356,7 @@ export default function App() {
             </span>
           </div>
         </section>
-        <ArtistPortfolio />
+        <ArtistPortfolio symbol={symbol} />
         <FinaleSection unlocked={unlocked} go={go} />
       </main>
       <footer>
@@ -352,6 +368,8 @@ export default function App() {
             setFound([]);
             setDiscovered([]);
             setSkipped(false);
+            setStoryUnlocked(false);
+            setQuizSession((session) => session + 1);
             go("inicio");
           }}
         >

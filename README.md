@@ -102,6 +102,8 @@ Revisado en 320, 390, 768 y 1280 px sin desbordamientos; 14 países visibles, ni
 
 ## Juego y orden de capítulos
 
+La historia comienza sellada: no se montan las fechas, fotos ni el símbolo de la timeline hasta completar las cinco preguntas del quiz. El último botón desbloquea la historia y desplaza la página hasta ella, respetando la preferencia de movimiento reducido y llevando allí el foco. No se exige una puntuación mínima. El desbloqueo se guarda en `universo-story-unlocked`; «Reiniciar descubrimientos» lo elimina y reinicia la partida del quiz. Desde el resultado se puede volver a la historia o repetir las preguntas. Comprobadas las dos vistas mediante renderizado y compilación de producción; pendiente la comprobación visual del desplazamiento en navegador.
+
 El orden es historia, álbum, quiz (03), Pajaporte (04), misterio (05) y artista (06). La lista de países y su contador aparecen después del quiz. El Pajaporte incorpora «La maleta del dragón»: doce cartas con seis parejas seleccionadas al azar entre los países confirmados. La selección y las posiciones cambian al volver a barajar.
 
 Las pistas muestran una pareja brevemente sin resolverla automáticamente. Los fallos vuelven a ocultar las cartas, los aciertos permanecen descubiertos, se cuentan intentos y pistas y la victoria entrega la estrella del acertijo. También se puede pedir la estrella sin jugar. El tablero admite ratón, pulsaciones táctiles y botones de teclado; no exige arrastrar ni superar un tiempo límite. La partida no se guarda al recargar; los símbolos recogidos mantienen el guardado local existente.
@@ -120,9 +122,9 @@ Los favoritos se han eliminado. «Reto de mirada» elige una lámina del filtro 
 
 Contenido y créditos: `src/data/artAtlas.ts`. Componente y estilos: `src/sections/ArtAtlas.*`. Imágenes locales: `public/images/art-atlas/`.
 
-## Cuatro secretos y álbum de globos
+## Cinco secretos y álbum de globos
 
-El acertijo exige hoja, estrella, luna y corazón. Los contadores se calculan a partir de `mystery` y la carta se desbloquea al encontrar todos, o con la alternativa explícita de saltar el acertijo. Los tres símbolos de una visita anterior se conservan; faltará recoger el corazón.
+El acertijo exige hoja, estrella, luna, corazón y pluma. La pluma se esconde junto a la última obra de Nulliusterra, en el capítulo 07; su pista lleva a esa galería. Los contadores se calculan a partir de `mystery` y la carta se desbloquea al encontrar todos, o con la alternativa explícita de saltar el acertijo. Los símbolos de visitas anteriores se conservan. Comprobado que cuatro símbolos no bastan, los cinco permiten abrir la carta y la galería contiene una sola pluma. Los botones del resultado del quiz tienen un contenedor vertical con separación de 14 px y altura mínima de 50 px para evitar que se toquen.
 
 Las quince fotografías se pueden girar. Una sola, definida por `albumSecretPhotoId` en `src/data/photos.ts`, contiene un corazón que se pulsa para recogerlo. Las otras catorce muestran globos de cumpleaños y no muestran texto al dorso. El corazón no está en el DOM mientras la foto permanece de frente. La foto vuelve a girarse con el mismo control; la ampliación de la fotografía se mantiene en su anverso.
 

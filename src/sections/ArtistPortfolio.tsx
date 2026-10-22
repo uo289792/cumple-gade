@@ -6,14 +6,18 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Modal from "../components/Modal";
 import SectionTitle from "../components/SectionTitle";
 import { asset } from "../data/photos";
 import { personalArt, personalArtist } from "../data/personalArt";
 import styles from "./ArtistPortfolio.module.css";
 
-export default function ArtistPortfolio() {
+export default function ArtistPortfolio({
+  symbol,
+}: {
+  symbol: (id: string) => ReactNode;
+}) {
   const [selected, setSelected] = useState<number | null>(null);
   const [zoomed, setZoomed] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
@@ -87,6 +91,9 @@ export default function ArtistPortfolio() {
                 <span>{personalArtist}</span>
               </div>
             </figcaption>
+            {index === personalArt.length - 1 && (
+              <div className={styles.secretMark}>{symbol("feather")}</div>
+            )}
           </figure>
         ))}
       </div>

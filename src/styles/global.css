@@ -454,6 +454,70 @@ h1 em {
 .story {
   background: radial-gradient(ellipse at 50% 50%, #faf5e8, #eee7d8);
 }
+.story-lock {
+  max-width: 660px;
+  margin: auto;
+  padding: 40px;
+  text-align: center;
+  border: 1px solid #b59b6c;
+  border-radius: 4px;
+}
+.story-lock-seal {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 25px;
+  background: #294536;
+  color: #f0d597;
+  border: 4px double #d8b671;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px #29453625;
+}
+.story-lock > .eyebrow {
+  color: #735323;
+  line-height: 1.8;
+}
+.story-lock h3 {
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.story-lock > p:not(.eyebrow) {
+  font-size: 14px;
+  color: #514735;
+  line-height: 1.85;
+  max-width: 460px;
+  margin: 0 auto 26px;
+}
+.story-lock-note {
+  display: block;
+  font-size: 12px;
+  color: #715027;
+  line-height: 1.8;
+  margin-top: 18px;
+}
+.story-unlocked {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: #294536;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+@media (max-width: 760px) {
+  .story-lock {
+    padding: 28px 20px;
+  }
+  .story-lock .button {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+  }
+}
 .timeline {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -886,6 +950,21 @@ h1 em {
   color: #9e7c3e;
   margin-bottom: 25px;
 }
+.quiz-result-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  width: min(100%, 280px);
+  margin-top: 12px;
+}
+.quiz-result-actions .button {
+  width: 100%;
+  min-height: 50px;
+  margin: 0;
+  justify-content: center;
+  flex-shrink: 0;
+}
 .quiz-result p:not(.eyebrow) {
   font-size: 13px;
   max-width: 320px;
@@ -925,7 +1004,7 @@ h1 em {
 }
 .symbol-slots {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   max-width: 380px;
   gap: 12px;
   margin: 32px 0 15px;

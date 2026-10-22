@@ -75,6 +75,15 @@
   font-size: 11px;
   padding-top: 6px;
 }
+.secretMark {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+.secretMark button {
+  color: #715b38;
+  transform: rotate(-15deg);
+}
 .work h3 {
   font-size: 28px;
   margin: 0 0 5px;

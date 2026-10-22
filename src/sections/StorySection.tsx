@@ -1,5 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Compass, Heart } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Compass,
+  Heart,
+  LockKeyhole,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import PhotoView from "../components/PhotoView";
 import SectionTitle from "../components/SectionTitle";
@@ -7,6 +13,8 @@ import { memories } from "../data/couple";
 import { photos } from "../data/photos";
 
 type Props = {
+  unlocked: boolean;
+  goToQuiz: () => void;
   memory: number;
   current: (typeof memories)[number];
   chooseMemory: (i: number) => void;
@@ -14,14 +22,57 @@ type Props = {
   symbol: (id: string) => ReactNode;
 };
 export default function StorySection({
+  unlocked,
+  goToQuiz,
   memory,
   current,
   chooseMemory,
   discovered,
   symbol,
 }: Props) {
+  if (!unlocked)
+    return (
+      <section
+        className="section story story-sealed"
+        id="historia"
+        tabIndex={-1}
+        aria-label="Nuestra historia, bloqueada"
+      >
+        <SectionTitle
+          number="01"
+          title="Hay páginas que guardan un secreto."
+          text="El diario reconoce los recuerdos. Solo necesita que tú también los recuerdes."
+        />
+        <div className="story-lock paper">
+          <div className="story-lock-seal" aria-hidden="true">
+            <LockKeyhole size={30} />
+          </div>
+          <p className="eyebrow">ARCHIVO SELLADO · NUESTRA HISTORIA</p>
+          <h3>La llave está en vuestra memoria.</h3>
+          <p>
+            Completa las cinco preguntas del desafío para descubrir estas
+            páginas. No hace falta acertarlas todas: cada respuesta abre un poco
+            más el diario.
+          </p>
+          <button className="button dark" onClick={goToQuiz}>
+            <BookOpen size={18} /> Ir al desafío <ArrowRight size={17} />
+          </button>
+          <span className="story-lock-note">
+            Cinco preguntas. Cuatro recuerdos por descubrir.
+          </span>
+        </div>
+      </section>
+    );
   return (
-    <section className="section story" id="historia">
+    <section
+      className="section story"
+      id="historia"
+      tabIndex={-1}
+      aria-label="Nuestra historia, desbloqueada"
+    >
+      <p className="story-unlocked" role="status">
+        <BookOpen size={16} /> Las páginas de nuestra historia están abiertas.
+      </p>
       <SectionTitle
         number="01"
         title="Todo empezó con una casualidad."

@@ -1,7 +1,7 @@
 import { ArrowRight, Check, RotateCcw, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { questions } from "../data/quiz";
-export default function Quiz() {
+export default function Quiz({ onComplete }: { onComplete: () => void }) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -9,12 +9,14 @@ export default function Quiz() {
   const previousIndex = useRef(0);
   useEffect(() => {
     if (previousIndex.current !== index) {
-      container.current?.scrollIntoView({
-        block: "start",
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-      });
+      if (index < questions.length)
+        container.current?.scrollIntoView({
+          block: "start",
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+            ? "auto"
+            : "smooth",
+        });
       previousIndex.current = index;
     }
   }, [index]);
@@ -45,7 +47,7 @@ export default function Quiz() {
           ))}
         </div>
         <Sparkles size={42} />
-        <p className="eyebrow">EXPEDICIÓN COMPLETADA</p>
+        <p className="eyebrow">HISTORIA DESBLOQUEADA</p>
         <h3>
           {score} de {questions.length} recuerdos
         </h3>
@@ -54,10 +56,15 @@ export default function Quiz() {
             ? "El dragón pide que le firmes el diario. Menuda memoria."
             : "El diario recomienda una segunda visita. Con merienda, a ser posible."}
         </p>
-        <button className="button dark" onClick={reset}>
-          <RotateCcw size={16} />
-          Volver a jugar
-        </button>
+        <div className="quiz-result-actions">
+          <button className="button dark" onClick={onComplete}>
+            Ver nuestra historia <ArrowRight size={16} />
+          </button>
+          <button className="button dark" onClick={reset}>
+            <RotateCcw size={16} />
+            Volver a jugar
+          </button>
+        </div>
       </div>
     );
   return (
@@ -109,10 +116,11 @@ export default function Quiz() {
               onClick={() => {
                 setIndex(index + 1);
                 setSelected(null);
+                if (index === questions.length - 1) onComplete();
               }}
             >
               {index === questions.length - 1
-                ? "Ver resultado"
+                ? "Desbloquear nuestra historia"
                 : "Siguiente recuerdo"}
               <ArrowRight size={16} />
             </button>
