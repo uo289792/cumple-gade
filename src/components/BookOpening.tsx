@@ -13,7 +13,7 @@ export default function BookOpening({
       aria-hidden="true"
       initial={{ opacity: 0 }}
       animate={{ opacity: [0, 1, 1, 0] }}
-      transition={{ duration: reduced ? 0 : 1.45, times: [0, 0.12, 0.8, 1] }}
+      transition={{ duration: reduced ? 0 : 6.5, times: [0, 0.05, 0.94, 1] }}
       onAnimationComplete={onComplete}
     >
       <div className="opening-book">
@@ -30,8 +30,8 @@ export default function BookOpening({
           initial={{ rotateY: 0 }}
           animate={{ rotateY: -155 }}
           transition={{
-            duration: reduced ? 0 : 1,
-            delay: reduced ? 0 : 0.2,
+            duration: reduced ? 0 : 1.6,
+            delay: reduced ? 0 : 1.2,
             ease: "easeInOut",
           }}
         >

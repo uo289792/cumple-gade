@@ -96,7 +96,6 @@ export default function MysterySection({
         </span>
         <p>
           Para ti.
-          <br />
           <small>Cuando las estrellas se alineen.</small>
         </p>
       </div>

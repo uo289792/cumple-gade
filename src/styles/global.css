@@ -998,8 +998,9 @@ h1 em {
 }
 .mystery-envelope > span {
   position: absolute;
-  top: 43%;
-  left: 42%;
+  top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -1014,13 +1015,18 @@ h1 em {
 .mystery-envelope > p {
   position: absolute;
   z-index: 2;
-  left: 28%;
-  bottom: 5px;
+  left: 16%;
+  right: 6%;
+  bottom: 16px;
+  margin: 0;
   font-family: "Caveat", cursive;
   font-size: 25px;
   line-height: 1.1;
 }
 .mystery-envelope small {
+  display: block;
+  margin-top: 6px;
+  line-height: 1.25;
   font-size: 17px;
 }
 .hints {
@@ -1040,123 +1046,6 @@ h1 em {
 }
 .artist {
   background: #f0e8d8;
-}
-.sketchbook {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  padding: 30px;
-  gap: 50px;
-  border-radius: 2px;
-  position: relative;
-}
-.sketchbook:before {
-  position: absolute;
-  content: "";
-  width: 23px;
-  left: 46%;
-  top: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, #8a69301c, transparent);
-}
-.sketch-left {
-  text-align: center;
-  padding: 15px 20px;
-}
-.sketch-left > .eyebrow {
-  font-size: 8px;
-  color: #957b51;
-}
-.sketch-left > svg {
-  width: 170px;
-  margin: 16px auto;
-}
-.sketch-left h3 {
-  font-size: 33px;
-}
-.sketch-left p:not(.eyebrow) {
-  font-size: 11px;
-  color: #857358;
-}
-.sketch-left > .handwritten {
-  font-size: 22px;
-  color: #a27348;
-}
-.sketch-left > img,
-.sketch-left > .photo-placeholder {
-  height: 310px;
-}
-.page-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 12px;
-}
-.page-controls > span {
-  font-size: 8px;
-  color: #8d7d61;
-}
-.sketch-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 18px;
-}
-.sketch-heading .handwritten {
-  font-size: 24px;
-}
-.sketch-heading > span:last-child {
-  font-size: 6px;
-  letter-spacing: 1.3px;
-  color: #9f8965;
-}
-.sketch-right canvas {
-  width: 100%;
-  aspect-ratio: 1.25;
-  display: block;
-  touch-action: none;
-  border: 1px solid #bba67b66;
-  box-shadow: inset 0 0 10px #bba67b33;
-  cursor: crosshair;
-  border-radius: 2px;
-}
-.tools {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 12px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.palette {
-  display: flex;
-  gap: 8px;
-}
-.palette button {
-  width: 23px;
-  height: 23px;
-  border-radius: 50%;
-  border: 2px solid #f4e8cf;
-}
-.palette button[aria-pressed="true"] {
-  outline: 1px solid #8e754b;
-  outline-offset: 2px;
-}
-.brush {
-  font-size: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.brush input {
-  width: 65px;
-  accent-color: #344c3c;
-}
-.canvas-help {
-  font-size: 9px;
-  color: #918168;
-  margin: 10px 0 0;
 }
 .artist-symbol {
   display: flex;
@@ -1480,16 +1369,6 @@ footer small {
   .mystery-envelope {
     width: 280px;
     height: 210px;
-  }
-  .sketchbook {
-    gap: 25px;
-    padding: 25px;
-  }
-  .sketch-left {
-    padding: 10px;
-  }
-  .sketch-heading > span:last-child {
-    display: none;
   }
   .side-note {
     font-size: 21px;
@@ -1835,57 +1714,6 @@ footer small {
     height: 78px;
     width: 75px;
   }
-  .sketchbook {
-    grid-template-columns: 1fr;
-    padding: 22px;
-    gap: 30px;
-  }
-  .sketchbook:before {
-    display: none;
-  }
-  .sketch-left {
-    padding: 4px;
-  }
-  .sketch-left > svg {
-    width: 140px;
-    margin: 12px auto;
-  }
-  .sketch-left h3 {
-    font-size: 34px;
-    max-width: 280px;
-    margin: 0 auto 15px;
-  }
-  .sketch-left > p:not(.eyebrow) {
-    max-width: 280px;
-    margin: 0 auto 15px;
-  }
-  .sketch-left > .handwritten {
-    font-size: 22px;
-  }
-  .sketch-right {
-    border-top: 1px solid #aa8a5d44;
-    padding-top: 24px;
-  }
-  .sketch-heading .handwritten {
-    font-size: 23px;
-  }
-  .sketchbook .tools {
-    gap: 7px;
-  }
-  .palette {
-    gap: 5px;
-  }
-  .palette button {
-    width: 23px;
-    height: 23px;
-  }
-  .tools .icon-button {
-    min-width: 35px;
-    min-height: 40px;
-  }
-  .brush input {
-    width: 50px;
-  }
   .artist-symbol {
     gap: 4px;
   }
@@ -2003,15 +1831,6 @@ footer small {
   .photo-caption .handwritten {
     font-size: 17px;
   }
-  .palette {
-    gap: 3px;
-  }
-  .tools {
-    gap: 3px;
-  }
-  .brush input {
-    width: 40px;
-  }
   .hero {
     min-height: 690px;
   }
@@ -2054,8 +1873,7 @@ footer small {
 .answers button {
   font-size: 13px;
 }
-.quiz-feedback p,
-.canvas-help {
+.quiz-feedback p {
   font-size: 11px;
 }
 .letter > p:not(.eyebrow) {
@@ -2087,9 +1905,6 @@ footer small {
   }
   .letter > p:not(.eyebrow) {
     font-size: 13px;
-  }
-  .sketch-left p:not(.eyebrow) {
-    font-size: 12px;
   }
   footer .reset-discoveries {
     margin-left: 18px;
@@ -2227,8 +2042,6 @@ footer small {
   }
   .memory-book,
   .memory-writing,
-  .sketch-left,
-  .sketch-right,
   .quiz-section > div {
     min-width: 0;
   }
@@ -2244,39 +2057,6 @@ footer small {
   .photo-back {
     overflow-y: auto;
     font-size: 20px;
-  }
-  .sketchbook .tools {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 44px 44px;
-    gap: 12px 8px;
-  }
-  .palette {
-    grid-column: 1 / -1;
-    justify-content: space-between;
-    gap: 3px;
-  }
-  .palette button {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    border-width: 9px;
-  }
-  .tools .icon-button,
-  .page-controls .icon-button {
-    min-width: 44px;
-    min-height: 44px;
-  }
-  .brush {
-    font-size: 11px;
-    gap: 8px;
-  }
-  .brush input {
-    width: min(100%, 130px);
-    height: 28px;
-    margin: 0;
-  }
-  .canvas-help {
-    line-height: 1.7;
   }
   .hero-skip,
   .text-button,
@@ -2325,14 +2105,6 @@ footer small {
   .header-actions .sound {
     display: inline-flex;
   }
-  .sketchbook {
-    padding: 16px;
-  }
-  .palette button {
-    width: 42px;
-    height: 44px;
-    border-width: 9px;
-  }
 }
 @media (max-height: 500px) and (orientation: landscape) {
   .lightbox > img,
@@ -2350,8 +2122,7 @@ footer small {
 }
 @media (pointer: coarse) {
   .icon-button,
-  .photo-caption .icon-button,
-  .palette button {
+  .photo-caption .icon-button {
     min-width: 44px;
     min-height: 44px;
   }
@@ -2370,12 +2141,6 @@ footer small {
 .quiz,
 .quiz-result {
   scroll-margin-top: 100px;
-}
-@media (max-width: 390px) {
-  .palette button {
-    width: 44px;
-    height: 44px;
-  }
 }
 @media (max-height: 500px) and (orientation: landscape) {
   .lightbox {

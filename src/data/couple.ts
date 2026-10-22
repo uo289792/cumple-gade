@@ -85,7 +85,7 @@ export const mystery = [
   {
     id: "moon",
     name: "Luna",
-    hint: "La imaginación guarda una luna junto a sus lápices.",
+    hint: "La imaginación guarda una luna al final del atlas de la artista.",
     target: "artista",
   },
 ];

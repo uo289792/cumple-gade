@@ -23,7 +23,7 @@ import BookOpening from "./components/BookOpening";
 import { couple, memories, mystery } from "./data/couple";
 import { photos } from "./data/photos";
 import Quiz from "./games/Quiz";
-import Sketchbook from "./games/Sketchbook";
+import ArtAtlas from "./sections/ArtAtlas";
 import { useSaved } from "./hooks/useSaved";
 import AlbumSection from "./sections/AlbumSection";
 import FinaleSection from "./sections/FinaleSection";
@@ -316,14 +316,14 @@ export default function App() {
         <section className="section artist" id="artista">
           <SectionTitle
             number="06"
-            title="La magia también se dibuja."
-            text="Un refugio para esa forma tuya de imaginar otros mundos."
+            title="Los mundos que llevas dentro."
+            text="Un atlas de dragones, bosques y lugares imposibles. Para ti, que sabes mirarlos con ojos de artista."
           />
-          <Sketchbook />
+          <ArtAtlas />
           <div className="artist-symbol">
             {symbol("moon")}
             <span className="handwritten">
-              Hasta la luna empezó siendo un boceto.
+              Para quien encuentra magia hasta en las sombras.
             </span>
           </div>
         </section>

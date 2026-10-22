@@ -1,6 +1,6 @@
 # El misterio de nuestro universo
 
-Una aventura de cumpleaños en React + TypeScript + Vite, con ilustración original de bosque, diario interactivo, álbum con las 15 fotografías encontradas en `Fotos/`, Pajaporte con 14 países, recuerdo del primer viaje a Poznań, quiz, búsqueda de símbolos, dragón original, cuaderno y lienzo descargable.
+Una aventura de cumpleaños en React + TypeScript + Vite, con ilustración original de bosque, diario interactivo, álbum con las 15 fotografías encontradas en `Fotos/`, Pajaporte con 14 países, recuerdo del primer viaje a Poznań, quiz, búsqueda de símbolos, dragón original y atlas visual de animación con favoritos.
 
 ## Ejecutar
 
@@ -25,7 +25,7 @@ npm run preview
 | Archivo                     | Contenido                                                                         |
 | --------------------------- | --------------------------------------------------------------------------------- |
 | `src/data/couple.ts`        | Fechas, recuerdos, notas, carta, pistas, número de países y privacidad del chiste |
-| `src/data/photos.ts`        | Fotos de portada, hitos, final y dibujos                                          |
+| `src/data/photos.ts`        | Fotos de portada, hitos y final                                                   |
 | `src/data/gallery.json`     | Fotografías del collage, pies de foto y mensajes del reverso                      |
 | `src/data/quiz.ts`          | Preguntas, opciones y respuesta correcta (índice desde cero)                      |
 | `src/data/pajaporteGame.ts` | Número de parejas, duración de pistas y textos del juego de memoria               |
@@ -36,7 +36,7 @@ npm run preview
 2. Sustituye las notas entre corchetes de cada recuerdo y los mensajes del reverso del álbum.
 3. Identifica qué fotos corresponden a encuentro, beso, aniversario y Poznań. Asigna sus rutas `images/couple/recuerdo-XX.jpeg` en `photos.ts`. No se han atribuido fotos a fechas sin evidencia. La última foto del álbum se usa en la carta; puedes cambiarla.
 4. El Pajaporte ya incluye los 14 países únicos proporcionados: Polonia, Italia, Hungría, Noruega, Alemania, Albania, Montenegro, Islandia, Malta, República Checa, Grecia, Reino Unido, España y Nepal. La lista está en `countryNames`, sin duplicados; los contadores y la respuesta del quiz se calculan a partir de ella. Los países aparecen juntos en una página legible del diario, sin diálogos repetidos. Poznań se destaca en un billete decorativo como primer viaje.
-5. Para dibujos, añade imágenes a la carpeta y objetos `{ id, src, alt, caption }` al array `drawings` en `photos.ts`. Las flechas permiten pasar sus páginas. Mientras no haya dibujos se muestra una ilustración del dragón.
+5. La sección de la artista es un atlas de nueve imágenes de animación. La selección, los créditos y las notas se editan en `src/data/artAtlas.ts`; los archivos optimizados están en `public/images/art-atlas/`. El antiguo lienzo se ha retirado.
 6. Para ocultar el contenido íntimo, usa `showPrivateJoke: false` en `couple.ts`: el Pajaporte se presenta como un diario de viajes y la pregunta del quiz vuelve a hablar de países compartidos. Puedes cambiar el nombre en `travelTitle`. La configuración es de código, no un panel público. El contenido de una web estática no puede proteger secretos: elimina también el texto privado antes de una publicación si no debe descargarse.
 
 Para añadir recuerdos, amplía `memories` sin modificar componentes. Para añadir fotos al collage, amplía `gallery.json`; conserva un identificador que comience por `galeria`. Las imágenes conservan su proporción con `object-fit: contain`. Se muestran alternativas si falta un archivo. Ninguna imagen de personas se ha generado ni se han atribuido años o historias nuevas.
@@ -49,7 +49,7 @@ Para añadir recuerdos, amplía `memories` sin modificar componentes. Para añad
 - «La maleta del dragón»: juego de memoria con seis parejas elegidas entre vuestros países. Cuenta intentos y pistas, permite volver a barajar y entrega la estrella al completarlo. Puede saltarse sin bloquear la carta.
 - Símbolos Hoja, Estrella y Luna en historia, Pajaporte y artista. Pistas opcionales, acompañante y alternativa para saltar el acertijo. Las dos vías abren la carta.
 - Álbum: ampliar, navegar con botones, deslizar con el dedo y girar las fotos con mensaje. Los diálogos cierran con Escape y mantienen el foco dentro mediante `<dialog>`.
-- Lienzo: ratón o dedo, cinco colores, grosor, borrar y guardar PNG con fondo. El dibujo no se conserva al recargar; descargar antes de salir.
+- Atlas de arte con filtros por mundo, ampliación completa, navegación con flechas o deslizamiento, notas de observación y colección de favoritos guardada en este navegador.
 - Sonidos opcionales sintetizados, desactivados inicialmente. No se reproducen pistas de música ni se necesitan archivos de audio.
 - Los símbolos y recuerdos se guardan en localStorage. Para reiniciar la experiencia, borra los datos del sitio del navegador (claves `universo-symbols`, `universo-memories`, `universo-skipped`). No se envían datos a un backend.
 - Soporte de movimiento reducido, botones con etiquetas, navegación por teclado y diseño móvil. Las fuentes de Google son el único recurso visual externo; si no cargan se usan fuentes alternativas locales.
@@ -72,14 +72,14 @@ El workflow usa Node 22, instala desde el lockfile, comprueba TypeScript, genera
 
 ## Recursos
 
-El bosque de `public/images/forest.webp` se generó para este proyecto y se optimizó a WebP. Los paisajes de sustitución y el dragón son SVG propios. Iconos de Lucide y transiciones de Framer Motion. No se usan ilustraciones oficiales de franquicias. El antiguo mapa ficticio y los sellos interactivos se han sustituido por un diario de países y un billete de Poznań; sus estilos están en `src/sections/TravelSection.module.css`.
+El bosque de `public/images/forest.webp` se generó para este proyecto y se optimizó a WebP. Los paisajes de sustitución y el dragón son SVG propios. Iconos de Lucide y transiciones de Framer Motion. El atlas incorpora arte de producción y fotogramas de las obras indicadas, con autoría, titularidad y enlaces a sus fuentes en cada ficha. El antiguo mapa ficticio y los sellos interactivos se han sustituido por un diario de países y un billete de Poznań; sus estilos están en `src/sections/TravelSection.module.css`.
 
 ## Verificación realizada
 
 - `npm run build`: TypeScript y compilación de producción correctos.
-- Navegador: apertura del libro, símbolos y desbloqueo, alternativa para saltar el acertijo, quiz completo con 5/5 y repetición, lightbox y cambio de foto, trazo real en el lienzo y borrado.
+- Navegador: apertura del libro, símbolos y desbloqueo, alternativa para saltar el acertijo, quiz completo con 5/5 y repetición, lightbox y cambio de foto.
 - Diseño inspeccionado en escritorio y móvil; anchos de 320 y 390 px sin desbordamiento horizontal.
-- El botón de PNG ejecuta la exportación; el navegador de pruebas mostró el estado de guardado, pero no devolvió el archivo mediante su API de descargas. Conviene confirmar la descarga en el navegador final de la destinataria.
+
 - Rutas del bosque en CSS compilado relativas (`../images/forest.webp`), aptas para el subdirectorio de GitHub Pages.
 
 Se incluye `vista-previa.jpg` como captura de la portada. Las pruebas no sustituyen la revisión de los textos y las fotos por Javi.
@@ -90,9 +90,9 @@ Se incluye `vista-previa.jpg` como captura de la portada. Las pruebas no sustitu
 - Verificación responsive en navegador a 320×740, 375×812, 390×844, 430×932, 768×1024 y 844×390: sin desbordamiento horizontal, ni en las secciones.
 - Mejoras: recuerdos en dos columnas en móvil, menú con los seis capítulos, controles de 44 px, paleta más cómoda, portada sin altura máxima que corte contenido, ajuste del lightbox horizontal y márgenes de zona segura.
 - El quiz vuelve al inicio del bloque al avanzar y al repetir para mantener visible el enunciado. Recorrido completo 5/5 comprobado.
-- El lightbox distingue desplazamiento vertical y deslizamiento horizontal. Los diálogos restauran el foco al cerrar. El lienzo sigue un único puntero para evitar saltos con dos dedos.
-- Comprobados trazo, borrado, preparación del PNG, cambio de fotografía, menú móvil y alternativa de privacidad del quiz. Sin errores en la consola durante esta revisión. Captura: `pajaporte-movil.jpg`.
-- Las comprobaciones usan tamaños emulados en el navegador; no se han probado dispositivos físicos iPhone/Android ni Safari. Se mantiene pendiente la confirmación del archivo PNG descargado en el dispositivo final.
+- El lightbox distingue desplazamiento vertical y deslizamiento horizontal. Los diálogos restauran el foco al cerrar.
+- Comprobados cambio de fotografía, menú móvil y alternativa de privacidad del quiz. Sin errores en la consola durante esta revisión. Captura: `pajaporte-movil.jpg`.
+- Las comprobaciones usan tamaños emulados en el navegador; no se han probado dispositivos físicos iPhone/Android ni Safari.
 
 ## Pajaporte simplificado
 
@@ -109,3 +109,19 @@ Las pistas muestran una pareja brevemente sin resolverla automáticamente. Los f
 Configuración en `src/data/pajaporteGame.ts`; lógica de barajado en `src/games/pajaporteMemory.ts`, componente y estilos en `src/games/PajaporteGame.*`.
 
 Verificado: partida completa 6/6, pista temporal, fallo y ocultación, repetición, reinicio, alternativa para no jugar y recogida de la estrella. Cien barajas comprobadas con dos cartas por país, sin duplicados de identificador ni destinos ajenos a la lista. Comprobados 320, 390, 768 y 1280 px sin desbordamientos; cartas de al menos 72 px de ancho en el tamaño más estrecho. Compilación correcta y consola sin errores. Capturas: `juego-pajaporte.jpg` y `juego-pajaporte-movil.jpg`.
+
+## Atlas de la imaginación
+
+El capítulo «Los mundos que llevas dentro» sustituye al lienzo. Contiene nueve láminas: tres estudios de color de Woonyoung Jung para _Cómo entrenar a tu dragón 3_, dos fondos conceptuales de Nick Cross para _Over the Garden Wall_ y cuatro fotogramas oficiales de Studio Ghibli (_El castillo ambulante_ y _El viaje de Chihiro_). Cada pieza identifica su tipo: los fotogramas no se presentan como concept art. Los títulos españoles de las láminas y las notas de observación son editoriales. Las paletas son orientativas.
+
+Los filtros permiten explorar dragones, bosque y anime. Cada imagen se abre completa, con navegación circular mediante botones, flechas de teclado o deslizamiento horizontal. Se puede guardar y quitar favoritos con el marcapáginas; «Mi colección» filtra por favoritos. La clave local `universo-art-favorites` mantiene la selección en el mismo navegador, sin backend. La luna del misterio sigue disponible al final de la sección.
+
+Código y contenido: `src/sections/ArtAtlas.tsx`, `ArtAtlas.module.css`, `src/data/artAtlas.ts`. Imágenes WebP locales en `public/images/art-atlas/`, cargadas de forma diferida. El código del antiguo lienzo y la generación de postales se ha eliminado; los PDF/QR y ejemplos exportados anteriormente no se modifican.
+
+Fuentes:
+
+- [Entrevista de AWN al diseñador de producción de The Hidden World](https://www.awn.com/animationworld/designing-spectacular-realm-dragons-dreamworks-animations-hidden-world), con estudios de color acreditados a Woonyoung Jung. © 2019 DreamWorks Animation LLC.
+- [Portafolio de Nick Cross: fondos conceptuales](https://ncrossanimation.tumblr.com/post/101848993177/heres-another-couple-of-concept-backgrounds-done). Over the Garden Wall © Cartoon Network.
+- [Galería oficial de El castillo ambulante](https://www.ghibli.jp/works/howl/) y [El viaje de Chihiro](https://www.ghibli.jp/works/chihiro/). Copyright completo en cada ficha.
+
+Verificación del atlas: filtros 9/3/2/4 láminas, alta y baja de favoritos, persistencia tras recarga, estado de colección vacía, navegación circular, flechas de teclado, Escape y restauración del foco. Nueve imágenes cargadas. Página sin desbordamiento a 320, 390, 768, 844 y 1280 px; ventana ampliada sin desbordamiento a 320 y 390 px y en horizontal 844 × 390. Consola sin errores y compilación de producción correcta. Pruebas en navegador con tamaños emulados; no se han probado dispositivos físicos. Capturas: `atlas-arte-detalle.jpg` y `atlas-arte-galeria.jpg`.

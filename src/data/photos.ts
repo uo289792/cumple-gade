@@ -44,6 +44,5 @@ export const photos: Photo[] = [
     caption: "Y todas las páginas que quedan…",
   },
 ];
-export const drawings: Photo[] = [];
 export const asset = (path: string) =>
   `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
