@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  ArrowLeft,
   ArrowUpRight,
-  Bookmark,
   ChevronLeft,
   ChevronRight,
   Expand,
   Eye,
+  Maximize,
+  Palette as PaletteIcon,
+  Shuffle,
   Sparkles,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import Modal from "../components/Modal";
 import { artPieces, artWorlds, type ArtPiece } from "../data/artAtlas";
-import { useSaved } from "../hooks/useSaved";
 import styles from "./ArtAtlas.module.css";
 
 function Palette({ piece }: { piece: ArtPiece }) {
@@ -28,30 +32,55 @@ function Palette({ piece }: { piece: ArtPiece }) {
 
 export default function ArtAtlas() {
   const [world, setWorld] = useState<string>("all");
-  const [onlySaved, setOnlySaved] = useState(false);
-  const [saved, setSaved] = useSaved<string[]>("universo-art-favorites", []);
-  const favorites = Array.isArray(saved) ? saved : [];
   const [selected, setSelected] = useState<string | null>(null);
+  const [zoomed, setZoomed] = useState(false);
+  const [scale, setScale] = useState(1);
+  const [challenge, setChallenge] = useState(false);
+  const [monochrome, setMonochrome] = useState(false);
+  const [clue, setClue] = useState(false);
   const start = useRef<{ x: number; y: number } | null>(null);
-  const pieces = artPieces.filter(
-    (p) =>
-      (world === "all" || p.world === world) &&
-      (!onlySaved || favorites.includes(p.id)),
-  );
+  const stage = useRef<HTMLDivElement>(null);
+  const pieces = artPieces.filter((p) => world === "all" || p.world === world);
   const currentIndex = pieces.findIndex((p) => p.id === selected);
   const current = pieces[currentIndex];
-  const toggle = (id: string) =>
-    setSaved(
-      favorites.includes(id)
-        ? favorites.filter((s) => s !== id)
-        : [...favorites, id],
-    );
-  const move = (step: number) =>
+  const open = (id: string, asChallenge = false) => {
+    setSelected(id);
+    setZoomed(false);
+    setScale(1);
+    setChallenge(asChallenge);
+    setMonochrome(asChallenge);
+    setClue(false);
+  };
+  const move = (step: number) => {
     setSelected(
       pieces[(currentIndex + step + pieces.length) % pieces.length].id,
     );
+    setClue(false);
+  };
+  const randomChallenge = () => {
+    const choices = pieces.filter((p) => p.id !== selected);
+    open(
+      (choices.length ? choices : pieces)[
+        Math.floor(Math.random() * (choices.length || pieces.length))
+      ].id,
+      true,
+    );
+  };
+  const enlarge = () => {
+    setZoomed(true);
+    setScale(2);
+  };
   useEffect(() => {
-    if (!current) return;
+    if (!zoomed || !stage.current) return;
+    const element = stage.current;
+    const frame = requestAnimationFrame(() => {
+      element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2;
+      element.scrollTop = (element.scrollHeight - element.clientHeight) / 2;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [zoomed, scale]);
+  useEffect(() => {
+    if (!current || zoomed) return;
     const key = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
         e.preventDefault();
@@ -61,11 +90,12 @@ export default function ArtAtlas() {
               pieces.length
           ].id,
         );
+        setClue(false);
       }
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [selected, world, onlySaved, saved]);
+  }, [selected, world, zoomed]);
 
   return (
     <div className={styles.atlas}>
@@ -103,205 +133,254 @@ export default function ArtAtlas() {
             </button>
           ))}
         </div>
-        <button
-          className={styles.savedFilter}
-          aria-pressed={onlySaved}
-          onClick={() => setOnlySaved(!onlySaved)}
-        >
-          <Bookmark size={15} fill={onlySaved ? "currentColor" : "none"} /> Mi
-          colección{" "}
-          <span>
-            {
-              favorites.filter((id) => artPieces.some((p) => p.id === id))
-                .length
-            }
-          </span>
+        <button className={styles.challengeButton} onClick={randomChallenge}>
+          <Eye size={16} /> Reto de mirada
         </button>
       </div>
       <div className={styles.resultLine} aria-live="polite">
-        <span>
-          {pieces.length} láminas{" "}
-          {onlySaved ? "en tu colección" : "para perderse un rato"}
-        </span>
+        <span>{pieces.length} láminas para perderse un rato</span>
         <span>
           <Eye size={13} /> Toca una imagen para explorar
         </span>
       </div>
-      {pieces.length ? (
-        <div className={styles.grid}>
-          {pieces.map((piece, i) => (
-            <article
-              key={piece.id}
-              className={`${styles.card} ${i === 0 ? styles.featured : ""}`}
-            >
-              <button
-                className={styles.imageButton}
-                onClick={() => setSelected(piece.id)}
-                aria-label={`Explorar ${piece.title}`}
-              >
-                <img
-                  src={`images/art-atlas/${piece.image}.webp`}
-                  alt={piece.alt}
-                  loading="lazy"
-                  width="1600"
-                  height="865"
-                />
-                <span className={styles.imageHint}>
-                  <Expand size={15} /> Explorar lámina
-                </span>
-                <span className={styles.plate}>
-                  LÁMINA {String(artPieces.indexOf(piece) + 1).padStart(2, "0")}
-                </span>
-              </button>
-              <div className={styles.caption}>
-                <div>
-                  <span className={styles.kind}>{piece.kind}</span>
-                  <h3>
-                    <button onClick={() => setSelected(piece.id)}>
-                      {piece.title}
-                    </button>
-                  </h3>
-                  <p>{piece.work}</p>
-                  <small>{piece.artist}</small>
-                </div>
-                <div className={styles.cardAside}>
-                  <button
-                    className={styles.bookmark}
-                    aria-label={`${favorites.includes(piece.id) ? "Quitar de" : "Guardar en"} mi colección: ${piece.title}`}
-                    aria-pressed={favorites.includes(piece.id)}
-                    onClick={() => toggle(piece.id)}
-                  >
-                    <Bookmark
-                      size={20}
-                      fill={
-                        favorites.includes(piece.id) ? "currentColor" : "none"
-                      }
-                    />
-                  </button>
-                  <Palette piece={piece} />
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div className={styles.empty}>
-          <Bookmark size={30} />
-          <h3>Tu colección empieza con una mirada.</h3>
-          <p>Marca las láminas que te inspiren con el marcapáginas.</p>
-          <button
-            className="text-button"
-            onClick={() => {
-              setOnlySaved(false);
-              setWorld("all");
-            }}
+      <div className={styles.grid}>
+        {pieces.map((piece, i) => (
+          <article
+            key={piece.id}
+            className={styles.card + (i === 0 ? " " + styles.featured : "")}
           >
-            Explorar todos los mundos <ArrowUpRight size={16} />
-          </button>
-        </div>
-      )}
+            <button
+              className={styles.imageButton}
+              onClick={() => open(piece.id)}
+              aria-label={"Explorar " + piece.title}
+            >
+              <img
+                src={"images/art-atlas/" + piece.image + ".webp"}
+                alt={piece.alt}
+                loading="lazy"
+                width="1600"
+                height="865"
+              />
+              <span className={styles.imageHint}>
+                <Expand size={15} /> Explorar lámina
+              </span>
+              <span className={styles.plate}>
+                LÁMINA {String(artPieces.indexOf(piece) + 1).padStart(2, "0")}
+              </span>
+            </button>
+            <div className={styles.caption}>
+              <div>
+                <span className={styles.kind}>{piece.kind}</span>
+                <h3>
+                  <button onClick={() => open(piece.id)}>{piece.title}</button>
+                </h3>
+                <p>{piece.work}</p>
+                <small>{piece.artist}</small>
+              </div>
+              <div className={styles.cardAside}>
+                <Palette piece={piece} />
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
       <div className={styles.footnote}>
         <span>UN PEQUEÑO MUSEO PARA TU IMAGINACIÓN</span>
         <p>
-          Concept art, fondos y fotogramas: cada lámina conserva sus créditos y
-          su fuente. Tus favoritos se guardan en este navegador.
+          Concept art, fondos y dibujos: cada lámina conserva sus créditos y su
+          fuente. Explora los detalles con la lupa o prueba el reto de mirada.
         </p>
       </div>
       {current && (
         <Modal
-          className={styles.artDialog}
-          label={`Atlas de arte: ${current.title}`}
-          close={() => setSelected(null)}
+          className={zoomed ? styles.zoomDialog : styles.artDialog}
+          label={
+            (zoomed ? "Imagen ampliada: " : "Atlas de arte: ") + current.title
+          }
+          close={() => {
+            setSelected(null);
+            setZoomed(false);
+          }}
         >
-          <div className={styles.viewer}>
-            <div className={styles.viewerTop}>
-              <span>
-                LÁMINA {String(artPieces.indexOf(current) + 1).padStart(2, "0")}{" "}
-                / {artPieces.length}
-              </span>
-              <span>{current.kind}</span>
-            </div>
-            <div
-              className={styles.fullImage}
-              onTouchStart={(e) => {
-                start.current =
-                  e.touches.length === 1
-                    ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
-                    : null;
-              }}
-              onTouchCancel={() => {
-                start.current = null;
-              }}
-              onTouchEnd={(e) => {
-                if (!start.current) return;
-                const dx = e.changedTouches[0].clientX - start.current.x,
-                  dy = e.changedTouches[0].clientY - start.current.y;
-                if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4)
-                  move(dx < 0 ? 1 : -1);
-                start.current = null;
-              }}
-            >
-              <img
-                key={current.id}
-                src={`images/art-atlas/${current.image}.webp`}
-                alt={current.alt}
-              />
-            </div>
-            <div className={styles.controls}>
-              <button onClick={() => move(-1)} aria-label="Lámina anterior">
-                <ChevronLeft size={20} />
-              </button>
-              <span aria-live="polite">
-                {currentIndex + 1} de {pieces.length}
-              </span>
-              <button onClick={() => move(1)} aria-label="Lámina siguiente">
-                <ChevronRight size={20} />
-              </button>
-            </div>
-            <div className={styles.viewerBody}>
-              <div>
-                <span className={styles.kind}>{current.work}</span>
-                <h3>{current.title}</h3>
-                <p className={styles.credit}>{current.artist}</p>
-                <a
-                  className={styles.source}
-                  href={current.source}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ver fuente y obra original <ArrowUpRight size={15} />
-                </a>
-                <small className={styles.copyright}>{current.copyright}</small>
+          {zoomed ? (
+            <div className={styles.zoomViewer}>
+              <div className={styles.zoomToolbar}>
+                <button onClick={() => setZoomed(false)}>
+                  <ArrowLeft size={16} /> Volver a la ficha
+                </button>
+                <div className={styles.zoomActions}>
+                  <button
+                    aria-label="Reducir imagen"
+                    disabled={scale <= 1}
+                    onClick={() => setScale(Math.max(1, scale - 0.5))}
+                  >
+                    <ZoomOut size={19} />
+                  </button>
+                  <span aria-live="polite">{Math.round(scale * 100)}%</span>
+                  <button
+                    aria-label="Ampliar imagen"
+                    disabled={scale >= 3}
+                    onClick={() => setScale(Math.min(3, scale + 0.5))}
+                  >
+                    <ZoomIn size={19} />
+                  </button>
+                  <button onClick={() => setScale(1)}>
+                    <Maximize size={16} /> Ajustar
+                  </button>
+                </div>
               </div>
-              <aside className={styles.observation}>
-                <span className={styles.kicker}>
-                  <Eye size={14} /> UNA MIRADA DE ARTISTA
-                </span>
-                <h4>{current.focus}</h4>
-                <p>{current.note}</p>
-                <Palette piece={current} />
-                <small>Paleta orientativa · nota de observación</small>
-              </aside>
+              <div
+                ref={stage}
+                className={styles.zoomStage}
+                tabIndex={0}
+                role="region"
+                aria-label="Imagen ampliada. Desplázate para ver los detalles."
+              >
+                <div
+                  className={styles.zoomCanvas}
+                  style={{
+                    width: scale * 100 + "%",
+                    height: scale * 100 + "%",
+                  }}
+                >
+                  <img
+                    className={monochrome ? styles.monochrome : ""}
+                    src={"images/art-atlas/" + current.image + ".webp"}
+                    alt={current.alt}
+                  />
+                </div>
+              </div>
+              <p className={styles.zoomCaption}>
+                {current.title} ·{" "}
+                {scale > 1
+                  ? "Desplázate por la imagen para ver los detalles."
+                  : "Imagen completa."}
+              </p>
             </div>
-            <button
-              className={styles.saveAction}
-              aria-pressed={favorites.includes(current.id)}
-              onClick={() => {
-                // Al quitar la lámina de la colección filtrada, cerramos para devolver el foco.
-                if (onlySaved && favorites.includes(current.id))
-                  setSelected(null);
-                toggle(current.id);
-              }}
-            >
-              <Bookmark
-                size={17}
-                fill={favorites.includes(current.id) ? "currentColor" : "none"}
-              />
-              {favorites.includes(current.id)
-                ? "Guardada en mi colección"
-                : "Guardar en mi colección"}
-            </button>
-          </div>
+          ) : (
+            <div className={styles.viewer}>
+              <div className={styles.viewerTop}>
+                <span>
+                  LÁMINA{" "}
+                  {String(artPieces.indexOf(current) + 1).padStart(2, "0")} /{" "}
+                  {artPieces.length}
+                </span>
+                <span>{current.kind}</span>
+              </div>
+              <div
+                className={styles.fullImage}
+                onTouchStart={(e) => {
+                  start.current =
+                    e.touches.length === 1
+                      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+                      : null;
+                }}
+                onTouchCancel={() => {
+                  start.current = null;
+                }}
+                onTouchEnd={(e) => {
+                  if (!start.current) return;
+                  const dx = e.changedTouches[0].clientX - start.current.x,
+                    dy = e.changedTouches[0].clientY - start.current.y;
+                  if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4)
+                    move(dx < 0 ? 1 : -1);
+                  start.current = null;
+                }}
+              >
+                <button
+                  className={styles.enlargeImage}
+                  onClick={enlarge}
+                  aria-label={"Ampliar imagen: " + current.title}
+                >
+                  <img
+                    key={current.id}
+                    className={monochrome ? styles.monochrome : ""}
+                    src={"images/art-atlas/" + current.image + ".webp"}
+                    alt={current.alt}
+                  />
+                  <span className={styles.imageHint}>
+                    <ZoomIn size={16} /> Toca para ampliar
+                  </span>
+                </button>
+              </div>
+              <div className={styles.controls}>
+                <button onClick={() => move(-1)} aria-label="Lámina anterior">
+                  <ChevronLeft size={20} />
+                </button>
+                <span aria-live="polite">
+                  {currentIndex + 1} de {pieces.length}
+                </span>
+                <button onClick={() => move(1)} aria-label="Lámina siguiente">
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+              <div className={styles.viewerBody}>
+                <div>
+                  <span className={styles.kind}>{current.work}</span>
+                  <h3>{current.title}</h3>
+                  <p className={styles.credit}>{current.artist}</p>
+                  <a
+                    className={styles.source}
+                    href={current.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ver fuente y obra original <ArrowUpRight size={15} />
+                  </a>
+                  <small className={styles.copyright}>
+                    {current.copyright}
+                  </small>
+                </div>
+                <aside className={styles.observation}>
+                  <span className={styles.kicker}>
+                    <Eye size={14} />{" "}
+                    {challenge ? "RETO DE MIRADA" : "UNA MIRADA DE ARTISTA"}
+                  </span>
+                  <h4>
+                    {challenge ? "¿Dónde se va tu mirada?" : current.focus}
+                  </h4>
+                  {challenge ? (
+                    <>
+                      <p>
+                        Sin el color, busca la zona que más destaca. ¿La
+                        reconoces por la luz, la silueta o el contraste?
+                      </p>
+                      <button
+                        className={styles.revealClue}
+                        aria-expanded={clue}
+                        onClick={() => setClue(!clue)}
+                      >
+                        {clue ? "Ocultar la pista" : "Descubrir una pista"}{" "}
+                        <Eye size={15} />
+                      </button>
+                      {clue && (
+                        <p className={styles.clue} role="status">
+                          {current.note}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p>{current.note}</p>
+                  )}
+                  <Palette piece={current} />
+                  <small>Paleta orientativa · nota de observación</small>
+                </aside>
+              </div>
+              <div className={styles.studyActions}>
+                <button
+                  aria-pressed={monochrome}
+                  onClick={() => setMonochrome(!monochrome)}
+                >
+                  <PaletteIcon size={17} />
+                  {monochrome ? "Ver en color" : "Ver en blanco y negro"}
+                </button>
+                <button onClick={randomChallenge}>
+                  <Shuffle size={17} />
+                  {challenge ? "Otro reto" : "Probar un reto de mirada"}
+                </button>
+              </div>
+            </div>
+          )}
         </Modal>
       )}
     </div>

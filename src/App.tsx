@@ -10,8 +10,6 @@ import {
   Moon,
   Sparkles,
   Star,
-  Volume2,
-  VolumeX,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -53,7 +51,6 @@ export default function App() {
   const [hint, setHint] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [flipped, setFlipped] = useState<string[]>([]);
-  const [sound, setSound] = useState(false);
   const [companion, setCompanion] = useState(false);
   const [scroll, setScroll] = useState(0);
   const gallery = photos.filter((p) => p.id.startsWith("galeria"));
@@ -81,20 +78,33 @@ export default function App() {
     });
   };
   const chime = () => {
-    if (!sound) return;
     try {
-      const ctx = new AudioContext(),
-        o = ctx.createOscillator(),
-        g = ctx.createGain();
-      o.type = "sine";
-      o.frequency.setValueAtTime(660, ctx.currentTime);
-      g.gain.setValueAtTime(0.045, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
-      o.connect(g);
-      g.connect(ctx.destination);
-      o.start();
-      o.stop(ctx.currentTime + 0.5);
-      o.onended = () => void ctx.close();
+      const ctx = new AudioContext();
+      // Dos notas suaves, disparadas solo por el gesto de recoger un secreto.
+      const play = () => {
+        const start = ctx.currentTime;
+        [880, 1174.66].forEach((frequency, i) => {
+          const oscillator = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const time = start + i * 0.06;
+          oscillator.type = "sine";
+          oscillator.frequency.value = frequency;
+          gain.gain.setValueAtTime(0.0001, time);
+          gain.gain.exponentialRampToValueAtTime(0.035, time + 0.006);
+          gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.12);
+          oscillator.connect(gain);
+          gain.connect(ctx.destination);
+          oscillator.start(time);
+          oscillator.stop(time + 0.13);
+          if (i === 1) oscillator.onended = () => void ctx.close();
+        });
+      };
+      if (ctx.state === "suspended") {
+        void ctx
+          .resume()
+          .then(play)
+          .catch(() => void ctx.close());
+      } else play();
     } catch {
       /* Audio is optional. */
     }
@@ -108,9 +118,9 @@ export default function App() {
         aria-label={`Recoger símbolo ${mystery[index].name}`}
         title={`Un símbolo del diario: ${mystery[index].name}`}
         onClick={() => {
+          chime();
           if (!found.includes(id)) {
             setFound([...found, id]);
-            chime();
           }
         }}
       >
@@ -123,7 +133,6 @@ export default function App() {
     setMemory(i);
     if (!discovered.includes(memories[i].id))
       setDiscovered([...discovered, memories[i].id]);
-    chime();
   };
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
     null,
@@ -158,14 +167,12 @@ export default function App() {
         </nav>
         <div className="header-actions">
           <button
-            className="icon-button sound"
-            onClick={() => setSound(!sound)}
-            aria-label={sound ? "Silenciar sonidos" : "Activar sonidos"}
-            aria-pressed={sound}
+            className="small-button"
+            onClick={() => {
+              chime();
+              go("misterio");
+            }}
           >
-            {sound ? <Volume2 size={18} /> : <VolumeX size={18} />}
-          </button>
-          <button className="small-button" onClick={() => go("misterio")}>
             <Sparkles size={14} />
             <span>{found.length}/3 secretos</span>
           </button>
@@ -244,7 +251,6 @@ export default function App() {
               className="button gold"
               onClick={() => {
                 setOpened(true);
-                chime();
                 setOpening(true);
               }}
             >

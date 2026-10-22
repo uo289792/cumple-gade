@@ -57,8 +57,7 @@
   flex-wrap: wrap;
   gap: 4px;
 }
-.filters button,
-.savedFilter {
+.filters button {
   min-height: 44px;
   padding: 10px 14px;
   background: transparent;
@@ -69,24 +68,9 @@
   background: #304237;
   color: #f8edda;
 }
-.filters button:hover,
-.savedFilter:hover {
+.filters button:hover {
   background: #d9cbb0;
   color: #35261e;
-}
-.savedFilter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #b2a28480;
-}
-.savedFilter[aria-pressed="true"] {
-  background: #e1d2b1;
-  border-color: #7c6542;
-}
-.savedFilter span {
-  border-left: 1px solid #b2a284;
-  padding-left: 9px;
 }
 .resultLine {
   display: flex;
@@ -103,31 +87,29 @@
   gap: 6px;
 }
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px 25px;
+  columns: 2;
+  column-gap: 25px;
 }
 .card {
   min-width: 0;
+  break-inside: avoid;
+  margin-bottom: 32px;
 }
 .featured {
-  grid-column: 1/-1;
+  column-span: all;
 }
 .imageButton {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1.85;
   padding: 0;
-  background: #162824;
+  background: transparent;
   overflow: hidden;
 }
 .imageButton img {
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   transition: transform 0.6s ease;
-}
-.featured .imageButton {
-  aspect-ratio: 2.55;
 }
 .imageButton:hover img {
   transform: scale(1.025);
@@ -204,21 +186,6 @@
   justify-content: space-between;
   gap: 15px;
 }
-.bookmark {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid #b2a28480;
-  background: transparent;
-  color: #665334;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.bookmark[aria-pressed="true"] {
-  background: #304237;
-  color: #f8edda;
-}
 .palette {
   display: flex;
   gap: 3px;
@@ -251,23 +218,6 @@
   line-height: 1.7;
   margin: 0;
 }
-.empty {
-  min-height: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px;
-  background: #e7dcc8;
-}
-.empty h3 {
-  font-size: 30px;
-  margin: 16px 0 12px;
-}
-.empty p {
-  font-size: 13px;
-}
 .artDialog {
   width: min(1080px, calc(100vw - 30px));
 }
@@ -289,8 +239,8 @@
   text-transform: uppercase;
 }
 .fullImage {
-  background: #172723;
-  padding: 12px;
+  background: transparent;
+  padding: 0;
 }
 .fullImage img {
   width: 100%;
@@ -376,17 +326,6 @@
   font-size: 9px;
   color: #7b6b51;
 }
-.saveAction {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #304237;
-  color: #f8edda;
-  padding: 12px 18px;
-  font-size: 12px;
-  margin-top: 24px;
-}
 @media (max-width: 650px) {
   .intro {
     align-items: flex-start;
@@ -424,11 +363,10 @@
     max-width: 135px;
   }
   .grid {
-    grid-template-columns: 1fr;
-    gap: 26px;
+    columns: 1;
   }
-  .featured .imageButton {
-    aspect-ratio: 1.85;
+  .card {
+    margin-bottom: 26px;
   }
   .imageButton img {
     object-fit: contain;
@@ -457,7 +395,7 @@
     display: block;
   }
   .fullImage {
-    padding: 5px;
+    padding: 0;
   }
   .viewerBody {
     grid-template-columns: 1fr;
@@ -471,13 +409,167 @@
     border-top: 1px solid #b2a28480;
     padding: 20px 0 0;
   }
-  .saveAction {
-    width: 100%;
-    justify-content: center;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .imageButton img {
     transition: none;
+  }
+}
+
+.challengeButton,
+.studyActions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 16px;
+  background: #304237;
+  color: #f8edda;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.challengeButton:hover,
+.studyActions button:hover {
+  background: #435b49;
+}
+.enlargeImage {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.monochrome {
+  filter: grayscale(1);
+}
+.studyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+  border-top: 1px solid #b2a28480;
+  padding-top: 20px;
+}
+.studyActions button[aria-pressed="true"] {
+  background: #645740;
+}
+.revealClue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  background: none;
+  font-size: 12px;
+}
+.clue {
+  border-left: 2px solid #aa854b;
+  padding: 10px 14px;
+  background: #e6dbc6;
+  margin-top: 10px;
+}
+.zoomDialog {
+  width: calc(100vw - 30px);
+  height: calc(100svh - 24px);
+  max-height: calc(100svh - 24px);
+  overflow: hidden;
+}
+.zoomViewer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f2e9d7;
+}
+.zoomToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 14px 62px 14px 16px;
+  border-bottom: 1px solid #b2a28480;
+}
+.zoomToolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  min-width: 44px;
+  background: transparent;
+  border: 1px solid #b2a28480;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.zoomToolbar button:hover {
+  background: #e3d5b9;
+}
+.zoomActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.zoomActions span {
+  min-width: 44px;
+  text-align: center;
+  font-size: 11px;
+}
+.zoomStage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  touch-action: pan-x pan-y pinch-zoom;
+  overscroll-behavior: contain;
+}
+.zoomCanvas {
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.zoomCanvas img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: none;
+}
+.zoomCaption {
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.6;
+  padding: 10px 16px;
+  margin: 0;
+  border-top: 1px solid #b2a28480;
+}
+@media (max-width: 650px) {
+  .studyActions {
+    flex-direction: column;
+  }
+  .studyActions button {
+    width: 100%;
+  }
+  .zoomToolbar {
+    padding: 12px 12px;
+  }
+  .zoomToolbar > button {
+    margin-right: 45px;
+  }
+  .zoomActions {
+    width: 100%;
+    justify-content: center;
+  }
+  .zoomToolbar button {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  .zoomCaption {
+    font-size: 10px;
   }
 }

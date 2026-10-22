@@ -998,7 +998,7 @@ h1 em {
 }
 .mystery-envelope > span {
   position: absolute;
-  top: 38%;
+  top: 27%;
   left: 50%;
   transform: translateX(-50%);
   width: 56px;
@@ -1401,9 +1401,6 @@ footer small {
     font-size: 9px;
     padding: 9px;
     gap: 5px;
-  }
-  .sound {
-    min-width: 34px;
   }
   .mobile-menu {
     display: inline-flex;
@@ -1822,9 +1819,6 @@ footer small {
   .small-button span {
     font-size: 8px;
   }
-  .header-actions .sound {
-    display: none;
-  }
   .photo-open {
     height: 175px;
   }
@@ -2101,9 +2095,6 @@ footer small {
   }
   .brand span {
     display: none;
-  }
-  .header-actions .sound {
-    display: inline-flex;
   }
 }
 @media (max-height: 500px) and (orientation: landscape) {
