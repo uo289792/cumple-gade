@@ -41,8 +41,8 @@ export const photos: Photo[] = [
   ...gallery,
   {
     id: "carta",
-    src: gallery[gallery.length - 1]?.src ?? "",
-    alt: "Fotografía final de la pareja",
+    src: "images/couple/carta-final.webp",
+    alt: "La pareja besándose frente al mar al atardecer",
     caption: "Y todas las páginas que quedan…",
   },
 ];

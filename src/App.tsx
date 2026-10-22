@@ -23,6 +23,7 @@ import { couple, memories, mystery } from "./data/couple";
 import { photos } from "./data/photos";
 import Quiz from "./games/Quiz";
 import ArtAtlas from "./sections/ArtAtlas";
+import ArtistPortfolio from "./sections/ArtistPortfolio";
 import { useSaved } from "./hooks/useSaved";
 import AlbumSection from "./sections/AlbumSection";
 import FinaleSection from "./sections/FinaleSection";
@@ -37,6 +38,7 @@ const chapters = [
   ["mapa", "El Pajaporte"],
   ["misterio", "El misterio"],
   ["artista", "La artista"],
+  ["su-arte", "Nulliusterra"],
 ];
 export default function App() {
   const [opened, setOpened] = useState(false);
@@ -338,6 +340,7 @@ export default function App() {
             </span>
           </div>
         </section>
+        <ArtistPortfolio />
         <FinaleSection unlocked={unlocked} go={go} />
       </main>
       <footer>

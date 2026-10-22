@@ -134,6 +134,14 @@ Apertura del diario: 6,5 s, con 1,2 s antes del giro de 1,6 s. Cartas fallidas: 
 
 ## Verificación de esta edición
 
+### Galería personal y ajustes móviles
+
+Añadida una galería de tres obras aportadas por el usuario, acreditadas a **Nulliusterra**, con vista completa, navegación y ampliación de detalles. Las etiquetas son descripciones, no títulos atribuidos a la autora. La fotografía de la carta final se ha sustituido por la nueva imagen de la pareja.
+
+En pantallas de hasta 760 px, la primera timeline usa cuatro tarjetas en dos columnas y selección en verde oscuro; las fotos conservan su proporción. El sobre con sello tiene papel más claro, tinta más oscura y menos inclinación, con controles y pistas más legibles. Los colores de la carta final de felicitación se conservan.
+
+Compilación de producción correcta. Contrastes calculados entre 7,01:1 y 10,04:1 para los seis pares principales de texto y fondo modificados. Esta actualización no tiene nueva comprobación visual en navegador: la herramienta bloqueó el acceso a la vista local. Las verificaciones de navegador enumeradas a continuación pertenecen a la edición anterior.
+
 - Quince reversos: catorce grupos de globos y un único corazón, sin mensajes ni botones anidados.
 - Carta bloqueada con 3/4 y disponible con 4/4; persistencia después de recargar y corazón oculto hasta girar su fotografía.
 - Cuatro imágenes de la historia cargadas, sin notas pendientes de anécdotas.

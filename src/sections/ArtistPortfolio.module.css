@@ -1,0 +1,232 @@
+.portfolio {
+  background: #e4e5d8;
+}
+.heading {
+  max-width: 1080px;
+  margin: 0 auto 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-block: 18px;
+  border-block: 1px solid #7b806c55;
+}
+.heading > span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #5e6954;
+}
+.heading p {
+  margin: 0;
+  font-family: "Caveat", cursive;
+  font-size: 24px;
+  color: #6c705c;
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  max-width: 1080px;
+  margin: auto;
+  align-items: start;
+}
+.work {
+  margin: 0;
+  min-width: 0;
+}
+.image {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  background: #fff;
+  cursor: zoom-in;
+  box-shadow: 0 8px 24px #22352a13;
+}
+.image img {
+  width: 100%;
+  height: auto;
+}
+.expand {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #f6efdfed;
+  color: #3f4a39;
+  border: 1px solid #7b806c66;
+  padding: 10px 12px;
+  font-size: 10px;
+}
+.work figcaption {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #7b806c55;
+}
+.number {
+  color: #87774c;
+  font-size: 11px;
+  padding-top: 6px;
+}
+.work h3 {
+  font-size: 28px;
+  margin: 0 0 5px;
+}
+.work figcaption div > span {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #60715e;
+}
+.signature {
+  margin: 38px auto 0;
+  max-width: 1080px;
+  text-align: right;
+  font-family: "Caveat", cursive;
+  font-size: 33px;
+  color: #435744;
+}
+.signature span {
+  display: block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  line-height: 1.8;
+  margin-top: 5px;
+  color: #6c705c;
+}
+.dialog {
+  width: min(1100px, calc(100vw - 30px));
+}
+.viewer {
+  padding: 25px;
+  background: #f4eee0;
+}
+.credit {
+  padding-right: 45px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 24px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+.credit span {
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #7c725f;
+}
+.stage {
+  max-height: 65svh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+.artImage {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.artImage img {
+  width: 100%;
+  height: auto;
+  max-height: 65svh;
+  object-fit: contain;
+}
+.artImage.zoomed {
+  width: 200%;
+  cursor: zoom-out;
+}
+.artImage.zoomed img {
+  max-height: none;
+}
+.viewerFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px;
+}
+.viewerFooter h3 {
+  font-size: 30px;
+  margin: 0;
+}
+.zoomButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  background: #344c3c;
+  color: #f6efdf;
+  padding: 10px 16px;
+  font-size: 12px;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 16px;
+}
+.controls button {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid #7b806c55;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+.controls span {
+  font-size: 11px;
+}
+@media (max-width: 900px) {
+  .gallery {
+    gap: 18px;
+  }
+  .work h3 {
+    font-size: 25px;
+  }
+  .heading {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+@media (max-width: 650px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .work figcaption {
+    padding: 15px 0;
+  }
+  .heading > span {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .heading p {
+    font-size: 22px;
+  }
+  .signature {
+    font-size: 30px;
+  }
+  .viewer {
+    padding: 22px 15px;
+  }
+  .credit span {
+    display: block;
+    margin-top: 5px;
+  }
+  .viewerFooter h3 {
+    font-size: 28px;
+  }
+}

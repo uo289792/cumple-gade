@@ -1121,6 +1121,9 @@ h1 em {
 .letter-photo > .photo-placeholder {
   height: 230px;
 }
+.letter-photo > img {
+  height: auto;
+}
 .letter-photo > .handwritten {
   font-size: 19px;
   display: block;
@@ -2021,25 +2024,188 @@ footer small {
     display: none;
   }
   .timeline button {
-    padding: 12px 8px;
-    min-height: 100px;
-    border: 1px solid #b39d6e66;
-    border-radius: 3px;
+    padding: 14px 8px;
+    min-height: 112px;
+    border: 1px solid #b9a47e;
+    border-radius: 8px;
+    background: #fbf6e9;
+    color: #3e382b;
   }
   .timeline button.active {
-    background: #dec89d55;
-    border-color: #a9683a;
+    background: #294536;
+    color: #fff4dd;
+    border-color: #294536;
+    box-shadow: inset 0 -3px #d8b671;
+  }
+  .timeline button.active small {
+    color: #f0cf8c;
+  }
+  .timeline button.active > span:last-child {
+    color: #fff4dd;
   }
   .timeline strong {
-    font-size: 21px;
+    font-size: clamp(20px, 5.5vw, 24px);
     min-height: 0;
   }
   .timeline button > span:last-child {
-    font-size: 11px;
+    font-size: 12px;
+    color: #585345;
     max-width: none;
   }
   .timeline small {
     margin-bottom: 5px;
+    font-size: 13px;
+    color: #785527;
+  }
+  .chapter-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .chapter-strip button {
+    min-height: 44px;
+    padding: 10px;
+    font-size: 11px;
+    color: #3c4939;
+    background: #f8f1e3;
+    border-radius: 4px;
+    white-space: normal;
+  }
+  .chapter-strip button:last-child {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  .chapter-strip small {
+    color: #785527;
+  }
+  .memory-book {
+    padding: 22px 18px;
+    gap: 22px;
+    min-height: 0;
+  }
+  .memory-photo {
+    max-width: 300px;
+    transform: rotate(-1.5deg);
+  }
+  .memory-photo > img {
+    height: auto;
+    max-height: min(420px, 55svh);
+    object-fit: contain;
+  }
+  .memory-writing h3 {
+    font-size: clamp(30px, 8.5vw, 38px);
+    line-height: 1.1;
+  }
+  .memory-writing > .eyebrow {
+    font-size: 10px;
+    line-height: 1.7;
+    color: #735323;
+  }
+  .memory-writing > p:not(.eyebrow) {
+    color: #514735;
+    line-height: 1.8;
+  }
+  .memory-footer {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .memory-footer > span {
+    font-size: 11px;
+    color: #715027;
+  }
+  .mystery-copy h2 {
+    font-size: clamp(34px, 9.5vw, 42px);
+    line-height: 1.1;
+  }
+  .mystery-copy > .eyebrow {
+    font-size: 10px;
+    line-height: 1.7;
+  }
+  .mystery-copy > p:not(.eyebrow) {
+    font-size: 14px;
+    color: #e0e3d1;
+    line-height: 1.8;
+  }
+  .mystery-copy .mystery-status {
+    font-size: 12px;
+  }
+  .mystery-envelope {
+    width: min(280px, calc(100% - 20px));
+    height: 205px;
+    margin: 4px auto 20px;
+    transform: rotate(3deg);
+    background: #dbc18c;
+    border-color: #f4e2ba;
+    color: #3e2e23;
+  }
+  .mystery-envelope:before,
+  .mystery-envelope:after {
+    background: #e6ce9c;
+  }
+  .mystery-envelope .envelope-flap {
+    background: #f4e2ba;
+  }
+  .mystery-envelope > span {
+    background: #7b3441;
+    color: #fff0ca;
+    border-color: #c58b6b;
+  }
+  .mystery-envelope > p {
+    left: 10%;
+    right: 8%;
+    bottom: 17px;
+    font-size: 27px;
+  }
+  .mystery-envelope small {
+    font-size: 17px;
+  }
+  .symbol-slots > div {
+    color: #d6dbc6;
+    background: #203f35;
+    border-color: #8c9a7e;
+  }
+  .symbol-slots > div.found {
+    color: #3b3826;
+    background: #edd8a1;
+    border-color: #edd8a1;
+  }
+  .symbol-slots span {
+    font-size: 11px;
+  }
+  .mystery-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .mystery-actions .button,
+  .mystery-actions .text-button {
+    min-height: 48px;
+    font-size: 13px;
+    justify-content: center;
+  }
+  .mystery-actions .button:disabled {
+    opacity: 1;
+    background: #304c42;
+    color: #dbe1cf;
+    border: 1px solid #849781;
+  }
+  .mystery-actions .text-button,
+  .skip-puzzle {
+    color: #e0e3d1;
+  }
+  .skip-puzzle {
+    font-size: 12px;
+    line-height: 1.6;
+    padding-block: 16px;
+    text-align: left;
+  }
+  .hints button {
+    font-size: 13px;
+    min-height: 44px;
+    color: #f0d597;
+  }
+  .hints button svg {
+    flex-shrink: 0;
+    margin-top: 3px;
   }
   .memory-book,
   .memory-writing,
