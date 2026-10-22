@@ -179,6 +179,53 @@ button {
   gap: 18px;
   align-items: center;
 }
+.chapters-toggle {
+  min-height: 44px;
+}
+.chapters-menu {
+  position: absolute;
+  top: 100%;
+  right: max(12px, 4.5%);
+  width: min(330px, calc(100vw - 24px));
+  max-height: calc(100svh - 100px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+  background: #f7efdf;
+  color: #344c3c;
+  border: 1px solid #c5ae7e;
+  box-shadow: 0 14px 32px #0a211d45;
+  border-radius: 0 0 8px 8px;
+}
+.chapters-menu[hidden] {
+  display: none;
+}
+.chapters-menu > p {
+  color: #785527;
+  margin-bottom: 12px;
+  font-size: 10px;
+}
+.chapters-menu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px;
+  padding: 10px 8px;
+  font-size: 13px;
+  border-top: 1px solid #b4a48350;
+}
+.chapters-menu a:hover {
+  background: #e4e5d8;
+}
+.chapters-menu small {
+  color: #785527;
+  font:
+    italic 14px Georgia,
+    serif;
+}
+.chapters-menu a > svg {
+  margin-left: auto;
+}
 .icon-button {
   display: inline-flex;
   align-items: center;

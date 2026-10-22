@@ -81,7 +81,7 @@ export const mystery = [
   {
     id: "moon",
     name: "Luna",
-    hint: "La imaginación guarda una luna al final del atlas de la artista.",
+    hint: "Entra en el Reto de mirada del atlas y pulsa «Descubrir el secreto». Después, recoge la luna que aparece.",
     target: "artista",
   },
   {
@@ -93,7 +93,7 @@ export const mystery = [
   {
     id: "feather",
     name: "Pluma",
-    hint: "Una pequeña pluma se ha quedado junto a la última obra de Nulliusterra. Busca entre sus trazos.",
+    hint: "Amplía las obras de Nulliusterra. Entre unas alas hay un borde de papel que parece suelto: quizá esconda algo.",
     target: "su-arte",
   },
 ];

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -30,7 +30,11 @@ function Palette({ piece }: { piece: ArtPiece }) {
   );
 }
 
-export default function ArtAtlas() {
+export default function ArtAtlas({
+  symbol,
+}: {
+  symbol: (id: string, label?: string) => ReactNode;
+}) {
   const [world, setWorld] = useState<string>("all");
   const [selected, setSelected] = useState<string | null>(null);
   const [zoomed, setZoomed] = useState(false);
@@ -342,28 +346,41 @@ export default function ArtAtlas() {
                   {challenge ? (
                     <>
                       <p>
-                        Sin el color, busca la zona que más destaca. ¿La
-                        reconoces por la luz, la silueta o el contraste?
+                        Observa qué destaca en la imagen sin color. Después,
+                        pulsa el botón para ver la pista y descubrir un secreto.
+                        No hay una respuesta que acertar.
                       </p>
                       <button
                         className={styles.revealClue}
                         aria-expanded={clue}
                         onClick={() => setClue(!clue)}
                       >
-                        {clue ? "Ocultar la pista" : "Descubrir una pista"}{" "}
+                        {clue ? "Ocultar la pista" : "Descubrir el secreto"}{" "}
                         <Eye size={15} />
                       </button>
                       {clue && (
-                        <p className={styles.clue} role="status">
-                          {current.note}
-                        </p>
+                        <div className={styles.challengeDiscovery}>
+                          <p className={styles.clue} role="status">
+                            {current.note}
+                          </p>
+                          <div className={styles.moonReward}>
+                            <p>
+                              <strong>¡Has encontrado la luna!</strong>
+                              <br />
+                              Recógela para sumar un símbolo a la carta.
+                            </p>
+                            {symbol("moon", "Recoger la luna")}
+                          </div>
+                        </div>
                       )}
                     </>
                   ) : (
                     <p>{current.note}</p>
                   )}
-                  <Palette piece={current} />
-                  <small>Paleta orientativa · nota de observación</small>
+                  <div className={styles.paletteNote}>
+                    <Palette piece={current} />
+                    <small>Paleta orientativa · nota de observación</small>
+                  </div>
                 </aside>
               </div>
               <div className={styles.studyActions}>

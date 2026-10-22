@@ -14,7 +14,7 @@ import {
   Star,
   X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dragon } from "./components/Art";
 import Modal from "./components/Modal";
 import PhotoView from "./components/PhotoView";
@@ -45,6 +45,30 @@ export default function App() {
   const [opened, setOpened] = useState(false);
   const [opening, setOpening] = useState(false);
   const [menu, setMenu] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const menuPanel = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!menu) return;
+    const dismiss = (event: PointerEvent) => {
+      if (
+        !menuPanel.current?.contains(event.target as Node) &&
+        !menuButton.current?.contains(event.target as Node)
+      )
+        setMenu(false);
+    };
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenu(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", key);
+    };
+  }, [menu]);
   const [memory, setMemory] = useState(0);
   const [storyUnlocked, setStoryUnlocked] = useSaved(
     "universo-story-unlocked",
@@ -56,7 +80,7 @@ export default function App() {
     [],
   );
   const [found, setFound] = useSaved<string[]>("universo-symbols", []);
-  const [skipped, setSkipped] = useSaved("universo-skipped", false);
+  const [letterOpened, setLetterOpened] = useState(false);
   const [hint, setHint] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [flipped, setFlipped] = useState<string[]>([]);
@@ -65,7 +89,7 @@ export default function App() {
   const gallery = photos.filter((p) => p.id.startsWith("galeria"));
   const current = memories[memory];
   const foundCount = mystery.filter((m) => found.includes(m.id)).length;
-  const unlocked = mystery.every((m) => found.includes(m.id)) || skipped;
+  const unlocked = mystery.every((m) => found.includes(m.id));
   useEffect(() => {
     const onScroll = () =>
       setScroll(
@@ -119,7 +143,7 @@ export default function App() {
       /* Audio is optional. */
     }
   };
-  const symbol = (id: string) => {
+  const symbol = (id: string, label?: string) => {
     const index = mystery.findIndex((m) => m.id === id);
     const Icon = [Leaf, Star, Moon, Heart, Feather][index];
     return (
@@ -135,7 +159,9 @@ export default function App() {
         }}
       >
         <Icon size={25} />
-        {found.includes(id) && <span>Encontrado</span>}
+        {(found.includes(id) || label) && (
+          <span>{found.includes(id) ? "Encontrado" : label}</span>
+        )}
       </button>
     );
   };
@@ -176,14 +202,17 @@ export default function App() {
             NUESTRO UNIVERSO<small>UN DIARIO EXTRAORDINARIO</small>
           </span>
         </a>
-        <nav aria-label="Capítulos" className={menu ? "nav open" : "nav"}>
-          {chapters.map(([id, label]) => (
-            <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>
-              {label}
-            </a>
-          ))}
-        </nav>
         <div className="header-actions">
+          <button
+            ref={menuButton}
+            className="small-button chapters-toggle"
+            aria-label={menu ? "Cerrar capítulos" : "Abrir capítulos"}
+            aria-expanded={menu}
+            aria-controls="chapters-menu"
+            onClick={() => setMenu(!menu)}
+          >
+            {menu ? <X size={18} /> : <Menu size={18} />} Capítulos
+          </button>
           <button
             className="small-button"
             onClick={() => {
@@ -196,15 +225,33 @@ export default function App() {
               {foundCount}/{mystery.length} secretos
             </span>
           </button>
-          <button
-            className="icon-button mobile-menu"
-            aria-label="Abrir navegación"
-            aria-expanded={menu}
-            onClick={() => setMenu(!menu)}
-          >
-            {menu ? <X /> : <Menu />}
-          </button>
         </div>
+        <nav
+          ref={menuPanel}
+          id="chapters-menu"
+          aria-label="Capítulos"
+          className="chapters-menu"
+          hidden={!menu}
+        >
+          <p className="eyebrow">EL ÍNDICE DEL DIARIO</p>
+          {chapters.map(([id, label], i) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={(event) => {
+                event.preventDefault();
+                go(id);
+                const target = document.getElementById(id);
+                target?.setAttribute("tabindex", "-1");
+                target?.focus({ preventScroll: true });
+              }}
+            >
+              <small>0{i + 1}</small>
+              {label}
+              <ArrowRight size={14} />
+            </a>
+          ))}
+        </nav>
         <div
           className="reading-progress"
           style={{ transform: `scaleX(${scroll})` }}
@@ -290,15 +337,6 @@ export default function App() {
             <span>EDICIÓN ESPECIAL · CUMPLEAÑOS</span>
           </div>
         </section>
-        <div className="chapter-strip">
-          <span className="eyebrow">TU MAPA DE EXPLORACIÓN</span>
-          {chapters.map(([id, label], i) => (
-            <button key={id} onClick={() => go(id)}>
-              <small>0{i + 1}</small>
-              {label}
-            </button>
-          ))}
-        </div>
         <StorySection
           unlocked={storyUnlocked}
           goToQuiz={() => go("quiz")}
@@ -337,9 +375,14 @@ export default function App() {
         <MysterySection
           found={found}
           unlocked={unlocked}
+          opened={letterOpened}
           hint={hint}
           setHint={setHint}
-          setSkipped={setSkipped}
+          openLetter={() => {
+            if (!unlocked) return;
+            setLetterOpened(true);
+            requestAnimationFrame(() => go("carta"));
+          }}
           go={go}
         />
         <section className="section artist" id="artista">
@@ -348,16 +391,10 @@ export default function App() {
             title="Los mundos que llevas dentro."
             text="Un atlas de dragones, bosques y lugares imposibles. Para ti, que sabes mirarlos con ojos de artista."
           />
-          <ArtAtlas />
-          <div className="artist-symbol">
-            {symbol("moon")}
-            <span className="handwritten">
-              Para quien encuentra magia hasta en las sombras.
-            </span>
-          </div>
+          <ArtAtlas key={quizSession} symbol={symbol} />
         </section>
-        <ArtistPortfolio symbol={symbol} />
-        <FinaleSection unlocked={unlocked} go={go} />
+        <ArtistPortfolio key={quizSession} symbol={symbol} />
+        <FinaleSection unlocked={unlocked && letterOpened} go={go} />
       </main>
       <footer>
         <BookOpen size={20} />
@@ -367,7 +404,7 @@ export default function App() {
           onClick={() => {
             setFound([]);
             setDiscovered([]);
-            setSkipped(false);
+            setLetterOpened(false);
             setStoryUnlocked(false);
             setQuizSession((session) => session + 1);
             go("inicio");
@@ -395,7 +432,9 @@ export default function App() {
               <strong>Guardián de páginas</strong>
               <p>
                 {unlocked
-                  ? "La carta te espera. Yo me quedo vigilando las galletas."
+                  ? letterOpened
+                    ? "La carta te espera. Yo me quedo vigilando las galletas."
+                    : "Ya tienes los cinco símbolos. Vuelve al sello y pulsa Abrir la carta."
                   : mystery.find((m) => !found.includes(m.id))?.hint}
               </p>
               <button
@@ -403,7 +442,9 @@ export default function App() {
                 onClick={() =>
                   go(
                     unlocked
-                      ? "carta"
+                      ? letterOpened
+                        ? "carta"
+                        : "misterio"
                       : mystery.find((m) => !found.includes(m.id))!.target,
                   )
                 }

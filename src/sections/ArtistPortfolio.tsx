@@ -20,6 +20,7 @@ export default function ArtistPortfolio({
 }) {
   const [selected, setSelected] = useState<number | null>(null);
   const [zoomed, setZoomed] = useState(false);
+  const [secretRevealed, setSecretRevealed] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
   const touch = useRef<{ x: number; y: number } | null>(null);
   const work = selected === null ? null : personalArt[selected];
@@ -91,15 +92,13 @@ export default function ArtistPortfolio({
                 <span>{personalArtist}</span>
               </div>
             </figcaption>
-            {index === personalArt.length - 1 && (
-              <div className={styles.secretMark}>{symbol("feather")}</div>
-            )}
           </figure>
         ))}
       </div>
-      <p className={styles.signature}>
-        Nulliusterra <span>Una pequeña galería. Un universo muy tuyo.</span>
-      </p>
+      <div className={styles.signature}>
+        <div className={styles.signedRow}>Nulliusterra</div>
+        <span>Una pequeña galería. Un universo muy tuyo.</span>
+      </div>
       {work && (
         <Modal
           className={styles.dialog}
@@ -142,17 +141,45 @@ export default function ArtistPortfolio({
                 touch.current = null;
               }}
             >
-              <button
+              <div
                 className={
-                  styles.artImage + (zoomed ? " " + styles.zoomed : "")
+                  styles.artCanvas + (zoomed ? " " + styles.zoomed : "")
                 }
-                aria-label={
-                  zoomed ? "Ver obra completa" : "Ampliar detalles de la obra"
-                }
-                onClick={() => setZoomed(!zoomed)}
               >
-                <img src={asset(work.src)} alt={work.alt} />
-              </button>
+                <button
+                  className={styles.artImage}
+                  aria-label={
+                    zoomed ? "Ver obra completa" : "Ampliar detalles de la obra"
+                  }
+                  onClick={() => setZoomed(!zoomed)}
+                >
+                  <img src={asset(work.src)} alt={work.alt} />
+                </button>
+                {work.id === "garzas" && (
+                  <div
+                    className={styles.secretCorner}
+                    onTouchStart={(event) => event.stopPropagation()}
+                    onTouchEnd={(event) => event.stopPropagation()}
+                  >
+                    {secretRevealed ? (
+                      <div className={styles.secretReward}>
+                        {symbol("feather")}
+                        <p role="status">
+                          Una pluma entre las alas. Tócala para recogerla.
+                        </p>
+                      </div>
+                    ) : (
+                      <button
+                        className={styles.looseCorner}
+                        aria-label="Levantar el borde suelto de esta obra"
+                        onClick={() => setSecretRevealed(true)}
+                      >
+                        <span aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
             <div className={styles.viewerFooter}>
               <h3>{work.label}</h3>

@@ -13,17 +13,19 @@ import { mystery } from "../data/couple";
 type Props = {
   found: string[];
   unlocked: boolean;
+  opened: boolean;
   hint: boolean;
   setHint: (value: boolean) => void;
-  setSkipped: (value: boolean) => void;
+  openLetter: () => void;
   go: (id: string) => void;
 };
 export default function MysterySection({
   found,
   unlocked,
+  opened,
   hint,
   setHint,
-  setSkipped,
+  openLetter,
   go,
 }: Props) {
   return (
@@ -53,13 +55,17 @@ export default function MysterySection({
         <p role="status" className="mystery-status">
           {mystery.filter((m) => found.includes(m.id)).length} de{" "}
           {mystery.length} símbolos encontrados
-          {unlocked ? " · La carta está abierta." : ""}
+          {opened
+            ? " · La carta está abierta."
+            : unlocked
+              ? " · Todo listo. Ya puedes abrir la carta."
+              : ""}
         </p>
         <div className="mystery-actions">
           <button
             className="button gold"
             disabled={!unlocked}
-            onClick={() => go("carta")}
+            onClick={openLetter}
           >
             {unlocked ? <BookOpen size={17} /> : <LockKeyhole size={17} />}{" "}
             {unlocked ? "Abrir la carta" : "La carta espera"}
@@ -82,15 +88,6 @@ export default function MysterySection({
               ))}
           </ul>
         )}
-        <button
-          className="skip-puzzle"
-          onClick={() => {
-            setSkipped(true);
-            go("carta");
-          }}
-        >
-          Prefiero abrir mi regalo sin acertijo
-        </button>
       </div>
       <div className="mystery-envelope" aria-hidden="true">
         <div className="envelope-flap" />

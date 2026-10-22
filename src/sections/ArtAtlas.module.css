@@ -274,7 +274,7 @@
 }
 .viewerBody {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 30px;
 }
 .viewerBody h3 {
@@ -302,6 +302,7 @@
   margin-top: 8px;
 }
 .observation {
+  min-width: 0;
   border-left: 1px solid #b2a28480;
   padding-left: 28px;
 }
@@ -459,12 +460,66 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 0;
-  min-height: 44px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  background: none;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 16px;
+  min-height: 48px;
+  background: #dfb879;
+  color: #302b20;
+  border: 1px solid #ac874c;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.challengeDiscovery {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+.observation .challengeDiscovery > p {
+  margin: 0;
+}
+.paletteNote {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid #b2a28480;
+}
+.moonReward {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #bba16c;
+  background: #f7edcf;
+  border-radius: 4px;
+}
+.moonReward > button[aria-label] {
+  color: #fff4dd;
+  background: #304237;
+  border-radius: 4px;
+  flex-direction: row;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 12px;
+  opacity: 1;
+  transform: none;
+}
+.moonReward > button:hover {
+  transform: none;
+  background: #435b49;
+}
+.moonReward > button span {
+  font:
+    13px/1.5 "DM Sans",
+    sans-serif;
+}
+.observation .moonReward > p {
+  margin: 0;
+  color: #514735;
   font-size: 12px;
+  line-height: 1.7;
 }
 .clue {
   border-left: 2px solid #aa854b;
